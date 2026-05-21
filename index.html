@@ -1311,8 +1311,9 @@ window.compartirWhatsApp = function() {
   const nombre = PRODUCTO_ACTIVO.Nombre;
   const precio = Number(PRODUCTO_ACTIVO.Precio).toLocaleString('es-CO');
   const texto = `\u00a1Mira este producto! \ud83d\udc40\n*${nombre}*\n\ud83d\udcb0 $${precio}`;
+  const esMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-  if (navigator.share) {
+  if (!esMobile && navigator.share) {
     navigator.share({ title: nombre, text: texto });
     return;
   }
