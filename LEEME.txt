@@ -1,0 +1,34 @@
+GREAT SPIRIT - CATÁLOGO ONLINE
+================================
+
+Archivos incluidos:
+- index.html     → Tu página web (ábrela con Live Server en VS Code)
+- products.json  → Tus productos (se carga automáticamente)
+- excel_productos.csv → Tu Excel actualizado con columna Descripcion
+
+CÓMO USAR:
+1. Pon los 3 archivos + tu logo.png en la misma carpeta
+2. Abre la carpeta con VS Code
+3. Clic derecho en index.html → Open with Live Server
+
+CÓMO AGREGAR PRODUCTOS:
+1. Edita el archivo excel_productos.csv en Excel
+2. Llena la columna Descripcion con el texto de cada producto
+3. Guarda como CSV (separado por punto y coma)
+4. Convierte a JSON y reemplaza products.json
+
+CAMPOS DEL EXCEL:
+- SKU: código único del producto
+- Nombre: nombre del producto  
+- Categoria: categoría (debe coincidir exactamente)
+- Marca: marca del producto
+- Precio: precio actual en pesos
+- Precio_Antes: precio tachado (dejar vacío si no aplica)
+- Descuento: porcentaje de descuento (ej: 20)
+- Tallas: tallas disponibles separadas por coma
+- Colores: colores disponibles separados por coma
+- Stock: cantidad disponible
+- Destacado: SI o NO
+- Foto1_Tienda a Foto8_Tienda: URLs de las fotos
+- Descripcion: descripción corta del producto
+- Activo: SI para mostrar, NO para ocultar
