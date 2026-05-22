@@ -23,7 +23,23 @@ const TIENDA_CONFIG = {
   colorOferta: '#E91E63',
   mensajeWhatsApp: 'Hola, quiero info de:',
   textoAgotado: 'Agotado',
-  textoUrgencia: '¡Quedan pocas unidades!'
+  textoUrgencia: '¡Quedan pocas unidades!',
+
+  // ===== POPUP DE AVISO (cambia el texto cuando quieras) =====
+  popupActivo: true,                          // true = se muestra | false = no se muestra
+  popupTitulo: '🔥 ¡Oferta especial hoy!',
+  popupMensaje: 'Escríbenos por WhatsApp y menciona el código GS15 para obtener un 15% de descuento en tu pedido de hoy.',
+  popupBoton: 'Escribir por WhatsApp',
+
+  // ===== NOTIFICACIONES DE PRUEBA SOCIAL =====
+  notificacionesActivas: true,               // true = se muestran | false = se desactivan
+  notificaciones: [
+    { nombre: 'Valentina M.', ciudad: 'Medellín',      producto: 'Pack Belleza Premium',   mins: 3  },
+    { nombre: 'Carlos R.',    ciudad: 'Bogotá',         producto: 'Kit Hogar Natural',       mins: 7  },
+    { nombre: 'Luisa P.',     ciudad: 'Cali',           producto: 'Accesorio Urbano',        mins: 12 },
+    { nombre: 'Andrés G.',    ciudad: 'Barranquilla',   producto: 'Crema Facial Gold',       mins: 21 },
+    { nombre: 'María T.',     ciudad: 'Bucaramanga',    producto: 'Producto Espiritualidad', mins: 5  }
+  ]
 };
 // ===== FIN DE EDICIÃ“N ===== 
 </script>
@@ -723,7 +739,7 @@ const TIENDA_CONFIG = {
   display: flex;
   white-space: nowrap;
   width: max-content;
-  animation: ticker 20s linear infinite;
+  animation: ticker 130s linear infinite;
 }
 .ticker-track:hover { animation-play-state: paused; }
 .ticker-item {
@@ -908,6 +924,16 @@ const TIENDA_CONFIG = {
 .close-modal {
   display: none;
 }
+/* ===== LOGOS FOOTER MAS GRANDES ===== */
+.footer-socials-big {
+  display: flex; gap: 18px; align-items: center; justify-content: center; margin-top: 12px; flex-wrap: wrap;
+}
+.footer-socials-big a {
+  color: rgba(255,255,255,0.55); font-size: 28px; transition: color 0.2s, transform 0.2s;
+  text-decoration: none;
+}
+.footer-socials-big a:hover { color: #fff; transform: translateY(-3px) scale(1.15); }
+
 @media (max-width: 640px) {
   .modal-body {
     grid-template-columns: 1fr;
@@ -929,9 +955,56 @@ const TIENDA_CONFIG = {
     padding: 16px;
   }
 }
+
+
+
+
+
+/* ===== BANNER INFERIOR ===== */
+#gs-banner-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #1565C0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 8px 16px;
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.15);
+}
+#gs-banner-bottom p {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 400;
+  text-align: center;
+  line-height: 1.5;
+  margin: 0;
+  flex: 1;
+}
+#gs-banner-close {
+  background: rgba(255,255,255,0.18);
+  border: none;
+  color: #fff;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 1;
+}
+#gs-banner-close:hover { background: rgba(255,255,255,0.3); }
+
 </style>
 
-  <meta property="og:type" content="website">
+  
+<meta property="og:type" content="website">
   <meta property="og:url" content="https://spiritoficia.netlify.app">
   <meta property="og:title" content="Great Spirit Oficial — Tienda Online">
   <meta property="og:description" content="Moda Urbana · Belleza · Tecnología · Hogar · Espiritualidad. Encuentra los mejores productos y pide por WhatsApp 📦">
@@ -956,6 +1029,56 @@ const TIENDA_CONFIG = {
   <div class="ticker-wrapper">
     <div class="ticker-track">
       <span class="ticker-item">🔥 Envíos a todo Colombia</span>
+      <span class="ticker-item">🔥 3 personas están viendo este producto ahora</span>
+<span class="ticker-item">🛒 Alguien agregó un producto al carrito</span>
+<span class="ticker-item">✨ Nuevo pedido realizado hace unos minutos</span>
+<span class="ticker-item">📦 Producto popular esta semana</span>
+<span class="ticker-item">👀 Varias personas están explorando el catálogo</span>
+<span class="ticker-item">💬 Clientes consultando por WhatsApp</span>
+<span class="ticker-item">🛍️ Producto destacado del momento</span>
+<span class="ticker-item">🚚 Nuevos pedidos en preparación</span>
+<span class="ticker-item">⭐ Clientes viendo productos premium</span>
+<span class="ticker-item">🔥 Este producto está llamando la atención</span>
+<span class="ticker-item">👀 Usuarios navegando ahora mismo</span>
+<span class="ticker-item">📦 Nuevos productos agregados recientemente</span>
+<span class="ticker-item">🛒 Compra rápida y sencilla disponible</span>
+<span class="ticker-item">💎 Productos populares en Colombia</span>
+<span class="ticker-item">✨ Clientes descubriendo nuevos artículos</span>
+<span class="ticker-item">🚀 Catálogo actualizado constantemente</span>
+<span class="ticker-item">🦅 Great Spirit Oficial en movimiento</span>
+<span class="ticker-item">📲 Personas consultando disponibilidad</span>
+<span class="ticker-item">🌟 Producto recomendado por visitantes</span>
+<span class="ticker-item">🔥 Tendencias activas en la tienda</span>
+<span class="ticker-item">🛍️ Nuevos visitantes explorando ofertas</span>
+<span class="ticker-item">👀 Este artículo está siendo muy visto</span>
+<span class="ticker-item">💬 Clientes preguntando por envíos</span>
+<span class="ticker-item">📦 Pedidos siendo preparados</span>
+<span class="ticker-item">⭐ Productos destacados hoy</span>
+<span class="ticker-item">🛒 Personas agregando favoritos</span>
+<span class="ticker-item">🚚 Envíos disponibles a toda Colombia</span>
+<span class="ticker-item">🔥 Este producto está en tendencia</span>
+<span class="ticker-item">✨ Visitantes descubriendo nuevas colecciones</span>
+<span class="ticker-item">💎 Productos premium disponibles ahora</span>
+<span class="ticker-item">📲 Catálogo activo y actualizado</span>
+<span class="ticker-item">🦅 Clientes explorando Great Spirit Oficial</span>
+<span class="ticker-item">🌟 Más personas viendo este artículo</span>
+<span class="ticker-item">👀 Actividad reciente en la tienda</span>
+<span class="ticker-item">🛍️ Productos populares entre visitantes</span>
+<span class="ticker-item">🔥 Nuevas visitas en este momento</span>
+<span class="ticker-item">💬 Atención disponible por WhatsApp</span>
+<span class="ticker-item">📦 Nuevos pedidos registrados</span>
+<span class="ticker-item">⭐ Productos favoritos de la semana</span>
+<span class="ticker-item">🚀 Descubre lo nuevo del catálogo</span>
+<span class="ticker-item">🛒 Usuarios revisando productos destacados</span>
+<span class="ticker-item">👀 Clientes navegando la tienda online</span>
+<span class="ticker-item">✨ Colecciones actualizadas recientemente</span>
+<span class="ticker-item">💎 Artículos seleccionados para ti</span>
+<span class="ticker-item">🔥 Producto visto varias veces hoy</span>
+<span class="ticker-item">📲 Personas revisando novedades</span>
+<span class="ticker-item">🦅 Great Spirit Oficial sigue creciendo</span>
+<span class="ticker-item">🌟 Catálogo visitado por nuevos usuarios</span>
+<span class="ticker-item">🛍️ Explora productos destacados</span>
+<span class="ticker-item">🚚 Preparando nuevos envíos</span>
       <span class="ticker-item">✨ Nuevos productos cada semana</span>
       <span class="ticker-item">💬 Pedidos por WhatsApp</span>
       <span class="ticker-item">🌿 Espiritualidad · Moda · Tecnología</span>
@@ -1174,21 +1297,32 @@ document.addEventListener('DOMContentLoaded', function() {
   if (footer) {
     footer.innerHTML = `
       <div class="footer-content">
-        <div class="footer-grid">
-          <div class="footer-section">
-            <h3>Contáctanos</h3>
-            ${C.direccion ? `<p><i class="fas fa-map-marker-alt" style="margin-right:8px"></i>${C.direccion}</p>` : ''}
-            ${C.telefono ? `<p><i class="fas fa-phone" style="margin-right:8px"></i>${C.telefono}</p>` : ''}
-            ${C.email ? `<p><i class="fas fa-envelope" style="margin-right:8px"></i>${C.email}</p>` : ''}
-            ${C.horarios ? `<p><i class="fas fa-clock" style="margin-right:8px"></i>${C.horarios}</p>` : ''}
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;padding-bottom:1rem;">
+          <div>
+            <p style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.8);margin:0 0 0.5rem;">Contáctanos</p>
+            ${C.direccion ? `<p style="font-size:11px;color:rgba(255,255,255,0.45);margin:0 0 0.2rem;"><i class="fas fa-map-marker-alt" style="margin-right:6px;"></i>${C.direccion}</p>` : ''}
+            ${C.telefono ? `<p style="font-size:11px;color:rgba(255,255,255,0.45);margin:0 0 0.2rem;"><i class="fas fa-phone" style="margin-right:6px;"></i>${C.telefono}</p>` : ''}
+            ${C.email ? `<p style="font-size:11px;color:rgba(255,255,255,0.45);margin:0 0 0.2rem;"><i class="fas fa-envelope" style="margin-right:6px;"></i>${C.email}</p>` : ''}
+            ${C.horarios ? `<p style="font-size:11px;color:rgba(255,255,255,0.45);margin:0;"><i class="fas fa-clock" style="margin-right:6px;"></i>${C.horarios}</p>` : ''}
           </div>
-          <div class="footer-section">
-            <h3>${C.nombre || 'Tienda'}</h3>
-            <p>${C.slogan || ''}</p>
+          <div style="text-align:center;">
+            <p style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.8);margin:0 0 0.6rem;">Síguenos</p>
+            <div class="footer-socials-big">
+              ${C.instagram ? `<a href="${C.instagram}" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>` : ''}
+              ${C.tiktok    ? `<a href="${C.tiktok}"    target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>` : ''}
+              ${C.facebook  ? `<a href="${C.facebook}"  target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>` : ''}
+              ${C.youtube   ? `<a href="${C.youtube}"   target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>` : ''}
+              ${C.whatsapp  ? `<a href="https://wa.me/${C.whatsapp}" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>` : ''}
+            </div>
+          </div>
+          <div style="text-align:right;">
+            <p style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.8);margin:0 0 0.2rem;">${C.nombre || 'Tienda'}</p>
+            <p style="font-size:11px;color:rgba(255,255,255,0.45);margin:0;">${C.slogan || ''}</p>
           </div>
         </div>
-        <div class="footer-bottom">
-          <p>&copy; ${new Date().getFullYear()} ${C.nombre || 'Tienda'}. Todos los derechos reservados.</p>
+        <div style="border-top:0.5px solid rgba(255,255,255,0.1);padding-top:0.7rem;text-align:center;">
+          <p style="font-size:10px;color:rgba(255,255,255,0.35);margin:0 0 0.2rem;">Nequi · Daviplata · Transferencia bancaria · PSE · Efecty · Baloto · Tarjetas crédito/débito · Contraentrega · PayPal</p>
+          <p style="font-size:10px;color:rgba(255,255,255,0.25);margin:0;">&copy; ${new Date().getFullYear()} ${C.nombre || 'Tienda'}. Todos los derechos reservados.</p>
         </div>
       </div>
     `;
@@ -1275,6 +1409,9 @@ window.openModal = function(sku) {
       `<button onclick="compartirWhatsApp()" style="margin-top:10px;width:100%;background:#25D366;color:#fff;border:none;padding:12px;border-radius:50px;font-size:0.95rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">` +
         `<i class="fas fa-share-alt"></i> Compartir` +
       `</button>` +
+      (product.YouTube && product.YouTube.trim() ?
+        `<a class="yt-btn" href="${product.YouTube}" target="_blank">` +
+        `<i class="fab fa-youtube"></i> Ver m\u00e1s en YouTube</a>` : '') +
     `</div>`
   ;
 
@@ -1310,7 +1447,7 @@ window.compartirWhatsApp = function() {
   if (!PRODUCTO_ACTIVO) return;
   const nombre = PRODUCTO_ACTIVO.Nombre;
   const precio = Number(PRODUCTO_ACTIVO.Precio).toLocaleString('es-CO');
-  const texto = `\u00a1Mira este producto! \ud83d\udc40\n${nombre}\n\ud83d\udcb0 $${precio}\n\ud83d\udecd\ufe0f ${window.location.href}`;
+  const texto = `\u00a1Mira este producto! \ud83d\udc40\n${nombre}\n\ud83d\udcb0 $${precio}`;
 
   navigator.clipboard.writeText(texto).then(function() {
     const btn = document.querySelector('[onclick="compartirWhatsApp()"]');
@@ -1379,6 +1516,22 @@ window.addEventListener('load', function() {
   }, { once: true });
 });
 </script>
+
+
+
+
+
+
+
+
+
+
+
+<!-- ===== BANNER INFERIOR ===== -->
+<div id="gs-banner-bottom">
+  <p id="gs-banner-texto">🛍 Envíos a todo Colombia · Paga 5522555555555con Nequi, Daviplata, PSE y más · Escríbenos por WhatsApp</p>
+  <button id="gs-banner-close" onclick="document.getElementById('gs-banner-bottom').style.display='none'" title="Cerrar">✕</button>
+</div>
 
 </body>
 </html>
