@@ -1160,6 +1160,70 @@ const TIENDA_CONFIG = {
     padding: 0;
   }
 
+
+  body.dark-mode{background:#121212!important;color:#e0e0e0!important}
+  body.dark-mode .header-temu{background:linear-gradient(135deg,#1a1a1a,#2d1a2e)!important}
+  body.dark-mode .product-card{background:#1e1e1e!important;border-color:#333!important}
+  body.dark-mode .product-name{color:#fff!important}
+  body.dark-mode .search-filter-bar{background:#1a1a1a!important}
+  body.dark-mode .search-input{background:#2a2a2a!important;color:#fff!important;border-color:#444!important}
+  body.dark-mode .filter-btn{background:#2a2a2a!important;color:#ccc!important;border-color:#444!important}
+  body.dark-mode .filter-btn.active{background:#FF6B35!important;color:#fff!important}
+  body.dark-mode .modal-content{background:#1e1e1e!important;color:#e0e0e0!important}
+  body.dark-mode footer{background:#0a0a0a!important}
+  #gs-dark-toggle{position:fixed;top:12px;left:12px;z-index:2000;background:rgba(0,0,0,0.3);border:none;border-radius:50px;padding:6px 10px;cursor:pointer;font-size:16px;transition:background 0.2s;backdrop-filter:blur(4px)}
+  #gs-dark-toggle:hover{background:rgba(0,0,0,0.5)}
+  #gs-top-btn{position:fixed;bottom:90px;right:24px;width:40px;height:40px;background:rgba(0,0,0,0.45);color:#fff;border:none;border-radius:50%;font-size:20px;cursor:pointer;z-index:997;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(10px);transition:opacity 0.3s,transform 0.3s;backdrop-filter:blur(4px)}
+  #gs-top-btn.show{opacity:1;transform:translateY(0)}
+  #gs-top-btn:hover{background:rgba(0,0,0,0.7)}
+
+  #gs-cart-btn {
+    position: relative; background: rgba(255,255,255,0.2); border: none;
+    color: #fff; width: 42px; height: 42px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; cursor: pointer; flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  #gs-cart-btn:hover { background: rgba(255,255,255,0.35); }
+  #gs-cart-badge {
+    position: absolute; top: -4px; right: -4px;
+    background: #fff; color: #E91E63; font-size: 10px; font-weight: 500;
+    width: 17px; height: 17px; border-radius: 50%;
+    display: none; align-items: center; justify-content: center;
+  }
+  #gs-cart-badge.show { display: flex; }
+  #gs-cart-panel {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--color-background-primary);
+    border-top: 0.5px solid var(--color-border-tertiary);
+    border-radius: 16px 16px 0 0;
+    padding: 16px 18px 24px;
+    z-index: 3000;
+    max-height: 80vh; overflow-y: auto;
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.12);
+  }
+  #gs-cart-panel.open { transform: translateY(0); }
+  .gs-cart-handle { width: 40px; height: 4px; background: var(--color-border-secondary); border-radius: 2px; margin: 0 auto 14px; }
+  .gs-cart-title { font-size: 15px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .gs-cart-empty { font-size: 13px; color: var(--color-text-tertiary); text-align: center; padding: 20px 0; }
+  .gs-cart-item { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .gs-cart-item:last-child { border-bottom: none; }
+  .gs-cart-item-name { font-size: 13px; color: var(--color-text-primary); }
+  .gs-cart-item-price { font-size: 13px; color: #E91E63; font-weight: 500; }
+  .gs-cart-item-rm { background: none; border: none; color: var(--color-text-tertiary); cursor: pointer; font-size: 16px; padding: 0 4px; }
+  .gs-cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 0.5px solid var(--color-border-tertiary); }
+  .gs-cart-total-label { font-size: 13px; color: var(--color-text-secondary); }
+  .gs-cart-total-val { font-size: 18px; font-weight: 500; color: var(--color-text-primary); }
+  .gs-cart-envio { font-size: 11px; color: var(--color-text-tertiary); text-align: right; margin-top: 3px; }
+  .gs-cart-wa { width: 100%; background: #25D366; color: #fff; border: none; border-radius: 50px; padding: 13px; font-size: 14px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 14px; }
+  .gs-cart-wa:hover { background: #1ea855; }
+  .gs-cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 2999; display: none; }
+  .gs-cart-overlay.show { display: block; }
+  .gs-add-cart-btn { width: 100%; background: var(--color-background-secondary); color: var(--color-text-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: 50px; padding: 10px; font-size: 0.9rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; }
+  .gs-add-cart-btn:hover { background: var(--color-background-primary); }
+
 </style>
 
 
@@ -1176,6 +1240,7 @@ const TIENDA_CONFIG = {
   <meta name="twitter:description" content="Moda Urbana · Belleza · Tecnología · Hogar · Espiritualidad. Encuentra los mejores productos y pide por WhatsApp 📦">
 </head>
 <body>
+  <button id="gs-dark-toggle" onclick="gsDarkToggle()" title="Modo oscuro">&#127769;</button>
   <header class="header-temu">
     <div class="header-content">
       <div class="flex justify-between items-center">
@@ -1183,7 +1248,13 @@ const TIENDA_CONFIG = {
             <h1 id="header-nombre"></h1>
             <p id="header-slogan"></p>
         </div>
-        <div class="social-icons-header" id="header-socials"></div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="social-icons-header" id="header-socials"></div>
+          <button id="gs-cart-btn" onclick="gsCartToggle()" aria-label="Ver carrito">
+            <i class="ti ti-shopping-cart" aria-hidden="true"></i>
+            <span id="gs-cart-badge">0</span>
+          </button>
+        </div>
       </div>
     </div>
   </header>
@@ -1554,6 +1625,12 @@ window.openModal = function(sku) {
         `<i class="fab fa-whatsapp"></i> Consultar por WhatsApp` +
       `</button>` +
       `<button onclick="compartirWhatsApp()" style="margin-top:10px;width:100%;background:#25D366;color:#fff;border:none;padding:12px;border-radius:50px;font-size:0.95rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">` +
+        `<i class="fas fa-share-alt"></i> Compartir` +
+      `</button>` +
+      `<button class="gs-add-cart-btn" onclick="gsCartAdd(PRODUCTO_ACTIVO)">` +
+        `<i class="fas fa-shopping-cart"></i> Agregar al carrito` +
+      `</button>` +
+      `<div style="display:none">` +
         `<i class="fas fa-share-alt"></i> Compartir` +
       `</button>` +
       (product.YouTube && product.YouTube.trim() ?
@@ -2046,5 +2123,98 @@ try {
 })();
 </script>
 
+
+<button id="gs-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Subir">&#8679;</button>
+<script>
+window.addEventListener("scroll",function(){var b=document.getElementById("gs-top-btn");if(b)b.classList.toggle("show",window.scrollY>300);});
+function gsDarkToggle(){var d=document.body.classList.toggle("dark-mode");document.getElementById("gs-dark-toggle").textContent=d?"&#x2600;":"&#x1F319;";try{localStorage.setItem("gs_dark",d?"1":"0");}catch(e){}}
+try{if(localStorage.getItem("gs_dark")==="1"){document.body.classList.add("dark-mode");var b=document.getElementById("gs-dark-toggle");if(b)b.textContent="&#x2600;";}}catch(e){}
+</script>
 </body>
 </html>
+
+<!-- ===== CARRITO ===== -->
+<div class="gs-cart-overlay" id="gs-cart-overlay" onclick="gsCartToggle()"></div>
+<div id="gs-cart-panel">
+  <div class="gs-cart-handle"></div>
+  <div class="gs-cart-title">
+    <i class="ti ti-shopping-cart" aria-hidden="true"></i>
+    Tu pedido
+  </div>
+  <div id="gs-cart-body">
+    <div class="gs-cart-empty">Agrega productos para ver tu pedido</div>
+  </div>
+</div>
+
+<script>
+var gsCart = [];
+
+function fmtCOP(n) { return '$' + Math.round(n).toLocaleString('es-CO'); }
+
+window.gsCartAdd = function(p) {
+  if (!p) return;
+  gsCart.push({ name: p.Nombre, price: Number(p.Precio) });
+  gsCartRender();
+  gsCartToggle();
+};
+
+window.gsCartRemove = function(i) {
+  gsCart.splice(i, 1);
+  gsCartRender();
+};
+
+window.gsCartToggle = function() {
+  var panel = document.getElementById('gs-cart-panel');
+  var overlay = document.getElementById('gs-cart-overlay');
+  panel.classList.toggle('open');
+  overlay.classList.toggle('show');
+};
+
+function gsCartRender() {
+  var badge = document.getElementById('gs-cart-badge');
+  if (gsCart.length > 0) {
+    badge.textContent = gsCart.length;
+    badge.classList.add('show');
+  } else {
+    badge.classList.remove('show');
+  }
+
+  var body = document.getElementById('gs-cart-body');
+  if (gsCart.length === 0) {
+    body.innerHTML = '<div class="gs-cart-empty">Agrega productos para ver tu pedido</div>';
+    return;
+  }
+
+  var total = gsCart.reduce(function(s, it) { return s + it.price; }, 0);
+  var html = '';
+  gsCart.forEach(function(it, i) {
+    html += '<div class="gs-cart-item">' +
+      '<span class="gs-cart-item-name">' + it.name + '</span>' +
+      '<span style="display:flex;align-items:center;gap:8px;">' +
+        '<span class="gs-cart-item-price">' + fmtCOP(it.price) + '</span>' +
+        '<button class="gs-cart-item-rm" onclick="gsCartRemove(' + i + ')" aria-label="Eliminar">&#10005;</button>' +
+      '</span>' +
+    '</div>';
+  });
+
+  html += '<div class="gs-cart-total-row">' +
+    '<span class="gs-cart-total-label">Subtotal (' + gsCart.length + ' productos)</span>' +
+    '<span class="gs-cart-total-val">' + fmtCOP(total) + '</span>' +
+  '</div>';
+  html += '<div class="gs-cart-envio">+ Costo de env\u00edo a coordinar</div>';
+  html += '<button class="gs-cart-wa" onclick="gsCartWA()">' +
+    '<i class="ti ti-brand-whatsapp" aria-hidden="true"></i> Pedir por WhatsApp' +
+  '</button>';
+
+  body.innerHTML = html;
+}
+
+window.gsCartWA = function() {
+  var C = window.TIENDA_CONFIG_OBJ || {};
+  var tel = C.whatsapp || '573000000000';
+  var total = gsCart.reduce(function(s,it){return s+it.price;},0);
+  var lineas = gsCart.map(function(it){ return '- ' + it.name + ' ' + fmtCOP(it.price); }).join('\n');
+  var msg = 'Hola, quiero consultar un pedido:\n' + lineas + '\nSubtotal: ' + fmtCOP(total) + '\n(+ env\u00edo a coordinar)';
+  window.open('https://wa.me/' + tel + '?text=' + encodeURIComponent(msg), '_blank');
+};
+</script>
