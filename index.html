@@ -1171,8 +1171,9 @@ const TIENDA_CONFIG = {
   body.dark-mode .filter-btn.active{background:#FF6B35!important;color:#fff!important}
   body.dark-mode .modal-content{background:#1e1e1e!important;color:#e0e0e0!important}
   body.dark-mode footer{background:#0a0a0a!important}
-  #gs-dark-toggle{position:fixed;top:12px;left:12px;z-index:2000;background:rgba(0,0,0,0.3);border:none;border-radius:50px;padding:6px 10px;cursor:pointer;font-size:16px;transition:background 0.2s;backdrop-filter:blur(4px)}
-  #gs-dark-toggle:hover{background:rgba(0,0,0,0.5)}
+  #gs-dark-toggle{background:none;border:none;cursor:pointer;font-size:12px;color:var(--color-text-secondary);padding:4px 10px;border-radius:20px;border:0.5px solid var(--color-border-tertiary);white-space:nowrap;animation:darkBlink 1.5s infinite;}
+  #gs-dark-toggle.active{animation:none;color:var(--color-text-primary);}
+  @keyframes darkBlink{0%,100%{opacity:1;}50%{opacity:0.4;}}
   #gs-top-btn{position:fixed;bottom:90px;right:24px;width:40px;height:40px;background:rgba(0,0,0,0.45);color:#fff;border:none;border-radius:50%;font-size:20px;cursor:pointer;z-index:997;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(10px);transition:opacity 0.3s,transform 0.3s;backdrop-filter:blur(4px)}
   #gs-top-btn.show{opacity:1;transform:translateY(0)}
   #gs-top-btn:hover{background:rgba(0,0,0,0.7)}
@@ -1193,31 +1194,32 @@ const TIENDA_CONFIG = {
   }
   #gs-cart-badge.show { display: flex; }
   #gs-cart-panel {
-    position: fixed; bottom: 0; left: 0; right: 0;
+    position: fixed; bottom: 0; right: 16px;
+    width: 300px;
     background: var(--color-background-primary);
-    border-top: 0.5px solid var(--color-border-tertiary);
-    border-radius: 16px 16px 0 0;
-    padding: 16px 18px 24px;
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: 12px 12px 0 0;
+    padding: 12px 14px 20px;
     z-index: 3000;
-    max-height: 80vh; overflow-y: auto;
+    max-height: 60vh; overflow-y: auto;
     transform: translateY(100%);
     transition: transform 0.35s cubic-bezier(.4,0,.2,1);
-    box-shadow: 0 -4px 24px rgba(0,0,0,0.12);
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
   }
   #gs-cart-panel.open { transform: translateY(0); }
   .gs-cart-handle { width: 40px; height: 4px; background: var(--color-border-secondary); border-radius: 2px; margin: 0 auto 14px; }
-  .gs-cart-title { font-size: 15px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .gs-cart-title { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
   .gs-cart-empty { font-size: 13px; color: var(--color-text-tertiary); text-align: center; padding: 20px 0; }
-  .gs-cart-item { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .gs-cart-item { display: flex; align-items: center; justify-content: space-between; padding: 5px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
   .gs-cart-item:last-child { border-bottom: none; }
-  .gs-cart-item-name { font-size: 13px; color: var(--color-text-primary); }
-  .gs-cart-item-price { font-size: 13px; color: #E91E63; font-weight: 500; }
+  .gs-cart-item-name { font-size: 12px; color: var(--color-text-primary); }
+  .gs-cart-item-price { font-size: 12px; color: #E91E63; font-weight: 500; }
   .gs-cart-item-rm { background: none; border: none; color: var(--color-text-tertiary); cursor: pointer; font-size: 16px; padding: 0 4px; }
   .gs-cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 0.5px solid var(--color-border-tertiary); }
-  .gs-cart-total-label { font-size: 13px; color: var(--color-text-secondary); }
-  .gs-cart-total-val { font-size: 18px; font-weight: 500; color: var(--color-text-primary); }
+  .gs-cart-total-label { font-size: 12px; color: var(--color-text-secondary); }
+  .gs-cart-total-val { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
   .gs-cart-envio { font-size: 11px; color: var(--color-text-tertiary); text-align: right; margin-top: 3px; }
-  .gs-cart-wa { width: 100%; background: #25D366; color: #fff; border: none; border-radius: 50px; padding: 13px; font-size: 14px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 14px; }
+  .gs-cart-wa { width: 100%; background: #25D366; color: #fff; border: none; border-radius: 50px; padding: 10px; font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; }
   .gs-cart-wa:hover { background: #1ea855; }
   .gs-cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 2999; display: none; }
   .gs-cart-overlay.show { display: block; }
@@ -1240,7 +1242,6 @@ const TIENDA_CONFIG = {
   <meta name="twitter:description" content="Moda Urbana · Belleza · Tecnología · Hogar · Espiritualidad. Encuentra los mejores productos y pide por WhatsApp 📦">
 </head>
 <body>
-  <button id="gs-dark-toggle" onclick="gsDarkToggle()" title="Modo oscuro">&#127769;</button>
   <header class="header-temu">
     <div class="header-content">
       <div class="flex justify-between items-center">
@@ -1251,7 +1252,7 @@ const TIENDA_CONFIG = {
         <div style="display:flex;align-items:center;gap:12px;">
           <div class="social-icons-header" id="header-socials"></div>
           <button id="gs-cart-btn" onclick="gsCartToggle()" aria-label="Ver carrito">
-            <i class="ti ti-shopping-cart" aria-hidden="true"></i>
+            <i class="fas fa-shopping-cart" aria-hidden="true"></i>
             <span id="gs-cart-badge">0</span>
           </button>
         </div>
@@ -1306,11 +1307,14 @@ const TIENDA_CONFIG = {
 
   <div class="search-filter-bar">
     <div class="max-w-[1400px] mx-auto">
-      <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Buscar productos...">
-        <button onclick="searchProducts()">
-          <i class="fas fa-search"></i>
-        </button>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+        <div class="search-box" style="flex:1;">
+          <input type="text" id="searchInput" placeholder="Buscar productos...">
+          <button onclick="searchProducts()">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+        <button id="gs-dark-toggle" onclick="gsDarkToggle()" title="Modo oscuro">&#9790; Oscuro</button>
       </div>
       <div class="filter-chips-wrapper"><div class="filter-chips" id="filterChips">
       <button class="filter-chip active" data-filter="all">Todos</button>
@@ -2127,7 +2131,7 @@ try {
 <button id="gs-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Subir">&#8679;</button>
 <script>
 window.addEventListener("scroll",function(){var b=document.getElementById("gs-top-btn");if(b)b.classList.toggle("show",window.scrollY>300);});
-function gsDarkToggle(){var d=document.body.classList.toggle("dark-mode");document.getElementById("gs-dark-toggle").textContent=d?"&#x2600;":"&#x1F319;";try{localStorage.setItem("gs_dark",d?"1":"0");}catch(e){}}
+function gsDarkToggle(){var d=document.body.classList.toggle("dark-mode");var btn=document.getElementById("gs-dark-toggle");btn.textContent=d?"☀ Claro":"☽ Oscuro";btn.classList.toggle("active",d);try{localStorage.setItem("gs_dark",d?"1":"0");}catch(e){}}
 try{if(localStorage.getItem("gs_dark")==="1"){document.body.classList.add("dark-mode");var b=document.getElementById("gs-dark-toggle");if(b)b.textContent="&#x2600;";}}catch(e){}
 </script>
 </body>
