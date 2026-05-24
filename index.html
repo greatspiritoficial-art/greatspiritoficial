@@ -1227,6 +1227,78 @@ const TIENDA_CONFIG = {
   .gs-add-cart-btn { width: 100%; background: var(--color-background-secondary); color: var(--color-text-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: 50px; padding: 10px; font-size: 0.9rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; }
   .gs-add-cart-btn:hover { background: var(--color-background-primary); }
 
+
+  /* ===== MODAL MOVIL REDISEÑADO ===== */
+  @media (max-width: 768px) {
+    .modal-overlay { align-items: flex-end !important; padding: 0 !important; }
+    .modal-content {
+      width: 100% !important; max-width: 100% !important;
+      border-radius: 20px 20px 0 0 !important;
+      max-height: 95vh !important;
+      overflow-y: auto !important;
+      padding: 0 !important;
+    }
+    .modal-close {
+      position: sticky !important; top: 0 !important; z-index: 10 !important;
+      background: rgba(255,255,255,0.9) !important;
+      width: 100% !important; display: flex !important;
+      justify-content: flex-end !important;
+      padding: 10px 16px 6px !important;
+      backdrop-filter: blur(4px) !important;
+    }
+    .modal-body {
+      display: block !important;
+      padding: 0 !important;
+      gap: 0 !important;
+    }
+    .modal-gallery {
+      width: 100% !important;
+    }
+    .modal-main-image {
+      border-radius: 0 !important;
+      margin-bottom: 0 !important;
+      height: 300px !important;
+      overflow: hidden !important;
+    }
+    .modal-main-image img {
+      width: 100% !important;
+      height: 300px !important;
+      object-fit: cover !important;
+    }
+    .modal-thumbnails {
+      padding: 10px 14px !important;
+      gap: 8px !important;
+      background: #f8f8f8 !important;
+    }
+    .modal-thumbnail {
+      width: 56px !important;
+      height: 56px !important;
+      border-radius: 8px !important;
+    }
+    .modal-info {
+      padding: 14px 16px 30px !important;
+    }
+    .modal-info h2 {
+      font-size: 1.1rem !important;
+      font-weight: 600 !important;
+      margin-bottom: 4px !important;
+      color: #111 !important;
+    }
+    .modal-price {
+      margin: 8px 0 !important;
+    }
+    .price-current {
+      font-size: 1.5rem !important;
+    }
+    .price-old {
+      font-size: 0.95rem !important;
+    }
+    .modal-btn-comprar {
+      font-size: 0.9rem !important;
+      padding: 12px !important;
+    }
+  }
+
 </style>
 
 
@@ -1610,34 +1682,30 @@ window.openModal = function(sku) {
       `</div>` +
     `</div>`
     + `<div class="modal-info">` +
-      `<h2 style="font-size:1.6rem;font-weight:800;margin-bottom:8px;">${product.Nombre || ''}</h2>` +
-      `<div class="modal-price" style="display:flex;align-items:baseline;gap:10px;margin:12px 0;">` +
-        `<span class="price-current" style="font-size:2rem;">$${precio}</span>` +
-        (precioAntes > 0 ? `<span class="price-old" style="font-size:1.1rem;">$${precioAntes.toLocaleString('es-CO')}</span>` : '') +
+      `<h2 style="font-size:1.15rem;font-weight:600;margin-bottom:4px;color:#111;">${product.Nombre || ''}</h2>` +
+      `<div style="display:flex;align-items:center;gap:8px;margin:6px 0 10px;">` +
+        `<span class="price-current" style="font-size:1.5rem;font-weight:700;color:#E91E63;">$${precio}</span>` +
+        (precioAntes > 0 ? `<span class="price-old" style="font-size:0.95rem;color:#aaa;text-decoration:line-through;">$${precioAntes.toLocaleString('es-CO')}</span>` : '') +
+        `<span style="font-size:11px;color:#888;margin-left:auto;display:flex;align-items:center;gap:4px;"><i class="fas fa-eye" style="font-size:11px;"></i> ${(function(){var d=new Date();var s=d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();return 18+(s%33);})() } hoy</span>` +
       `</div>` +
-      `<div style="line-height:2;color:#555;font-size:0.95rem;border-top:1px solid #eee;padding-top:12px;">` +
-        (product.Descripcion ? `<div style='margin-bottom:10px;color:#444;font-size:0.95rem;line-height:1.6;border-bottom:1px solid #f0f0f0;padding-bottom:10px;'>${product.Descripcion}</div>` : '') +
-        (product.Marca  ? `<div><b>Marca:</b> ${product.Marca}</div>` : '') +
-        (product.Estado ? `<div><b>Estado:</b> ${product.Estado}</div>` : '') +
-        (product.Tallas ? `<div><b>Tallas:</b> ${product.Tallas}</div>` : '') +
-        (product.Colores? `<div><b>Colores:</b> ${product.Colores}</div>` : '') +
-      `</div>` +
-      `<div style="display:inline-flex;align-items:center;gap:6px;background:#f5f5f5;border-radius:8px;padding:6px 12px;margin-bottom:12px;">` +
-        `<i class="fas fa-eye" style="color:#999;font-size:13px;"></i>` +
-        `<span style="font-size:12px;color:#777;">${(function(){var d=new Date();var s=d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();return 18+(s%33);})() } personas vieron esto hoy</span>` +
+      (product.Descripcion ? `<p style="font-size:0.88rem;color:#555;line-height:1.5;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #f0f0f0;">${product.Descripcion}</p>` : '') +
+      `<div style="font-size:0.85rem;color:#555;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:6px;">` +
+        (product.Estado ? `<span style="background:#f5f5f5;padding:3px 10px;border-radius:20px;"><b>Estado:</b> ${product.Estado}</span>` : '') +
+        (product.Tallas ? `<span style="background:#f5f5f5;padding:3px 10px;border-radius:20px;"><b>Tallas:</b> ${product.Tallas}</span>` : '') +
+        (product.Colores? `<span style="background:#f5f5f5;padding:3px 10px;border-radius:20px;"><b>Colores:</b> ${product.Colores}</span>` : '') +
+        (product.Marca  ? `<span style="background:#f5f5f5;padding:3px 10px;border-radius:20px;"><b>Marca:</b> ${product.Marca}</span>` : '') +
       `</div>` +
       `<button class="modal-btn-comprar" onclick="comprarWhatsApp()">` +
         `<i class="fab fa-whatsapp"></i> Consultar por WhatsApp` +
       `</button>` +
-      `<button onclick="compartirWhatsApp()" style="margin-top:10px;width:100%;background:#25D366;color:#fff;border:none;padding:12px;border-radius:50px;font-size:0.95rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">` +
-        `<i class="fas fa-share-alt"></i> Compartir` +
-      `</button>` +
-      `<button class="gs-add-cart-btn" onclick="gsCartAdd(PRODUCTO_ACTIVO)">` +
-        `<i class="fas fa-shopping-cart"></i> Agregar al carrito` +
-      `</button>` +
-      `<div style="display:none">` +
-        `<i class="fas fa-share-alt"></i> Compartir` +
-      `</button>` +
+      `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">` +
+        `<button onclick="compartirWhatsApp()" style="background:#f0f0f0;color:#333;border:none;padding:11px;border-radius:50px;font-size:0.85rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">` +
+          `<i class="fas fa-share-alt"></i> Compartir` +
+        `</button>` +
+        `<button onclick="gsCartAdd(PRODUCTO_ACTIVO)" style="background:#1a1a2e;color:#fff;border:none;padding:11px;border-radius:50px;font-size:0.85rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">` +
+          `<i class="fas fa-shopping-cart"></i> Al carrito` +
+        `</button>` +
+      `</div>` +
       (product.YouTube && product.YouTube.trim() ?
         `<a class="yt-btn" href="${product.YouTube}" target="_blank">` +
         `<i class="fab fa-youtube"></i> Ver m\u00e1s en YouTube</a>` : '') +
