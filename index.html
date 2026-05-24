@@ -1061,6 +1061,54 @@ const TIENDA_CONFIG = {
     100% { left: 200%; }
   }
 
+  #wc-wrap{padding:0;max-width:100%;margin:0}
+  #wc-card{border-radius:0;overflow:hidden;position:relative;margin-bottom:0}
+  #wc-stars{position:absolute;inset:0;pointer-events:none;z-index:0}
+  .wc-star{position:absolute;border-radius:50%;background:#fff;animation:wcTwinkle 2s infinite alternate}
+  @keyframes wcTwinkle{from{opacity:0.1}to{opacity:0.85}}
+  @keyframes wcGrad{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  #wc-bg{background-size:300% 300%;animation:wcGrad 10s ease infinite;position:relative;z-index:1}
+  .wc-header{padding:8px 16px;display:flex;align-items:center;gap:10px;cursor:pointer}
+  .wc-dia-txt{color:#fff;font-size:13px;font-weight:600;white-space:nowrap;flex-shrink:0}
+  .wc-fecha-txt{color:rgba(255,255,255,0.55);font-size:11px;white-space:nowrap;flex-shrink:0}
+  .wc-sep{color:rgba(255,255,255,0.25);flex-shrink:0}
+  .wc-luna-info{color:rgba(255,255,255,0.8);font-size:11px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .wc-hright{display:flex;align-items:center;gap:6px;flex-shrink:0;margin-left:auto}
+  .wc-festivo{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:500;white-space:nowrap}
+  .wc-festivo.si{background:rgba(76,175,80,0.3);color:#a5d6a7}
+  .wc-festivo.no{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.4)}
+  .wc-pill-bar{color:rgba(255,255,255,0.7);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .wc-close-btn{background:rgba(255,255,255,0.15);border:none;color:#fff;width:20px;height:20px;border-radius:50%;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1;padding:0}
+  .wc-expand-btn{background:rgba(255,255,255,0.15);border:none;color:#fff;font-size:10px;padding:3px 8px;border-radius:20px;cursor:pointer;white-space:nowrap;font-family:inherit}
+  .wc-pills{display:none}
+  .wc-body{overflow:hidden;transition:max-height 0.5s ease;max-height:0}
+  .wc-inner{padding:0 20px 20px}
+  .wc-divider{border:none;border-top:0.5px solid rgba(255,255,255,0.1);margin:12px 0}
+  .wc-slabel{color:rgba(255,255,255,0.45);font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+  .wc-daynums{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .wc-daynum{background:rgba(0,0,0,0.2);border-radius:8px;padding:7px 12px;font-size:12px;color:rgba(255,255,255,0.65)}
+  .wc-daynum strong{color:#fff}
+  .wc-row{display:flex;gap:10px;padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.07)}
+  .wc-row:last-child{border-bottom:none}
+  .wc-row-icon{font-size:18px;width:26px;text-align:center;flex-shrink:0;padding-top:1px}
+  .wc-row-title{font-size:13px;color:#fff;font-weight:500;margin-bottom:2px}
+  .wc-row-sub{font-size:11px;color:rgba(255,255,255,0.5);line-height:1.4}
+  .wc-row-practica{font-size:11px;color:rgba(255,255,255,0.75);margin-top:3px;font-style:italic}
+  .wc-cal-block{background:rgba(0,0,0,0.2);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+  .wc-cal-row{display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)}
+  .wc-cal-row:last-child{border-bottom:none}
+  .wc-cal-key{font-size:12px;color:rgba(255,255,255,0.45);flex-shrink:0;width:120px}
+  .wc-cal-val{font-size:12px;color:#fff;text-align:right;flex:1;line-height:1.4}
+  .wc-counts{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+  .wc-count{background:rgba(0,0,0,0.2);border-radius:8px;padding:9px 6px;text-align:center}
+  .wc-count-n{font-size:18px;font-weight:500;color:#fff;display:block}
+  .wc-count-l{font-size:10px;color:rgba(255,255,255,0.45);display:block;margin-top:2px;line-height:1.3}
+  .wc-cierre{max-height:0;overflow:hidden;transition:max-height 0.4s ease,opacity 0.4s ease;opacity:0}
+  .wc-cierre.show{max-height:200px;opacity:1}
+  .wc-cierre-inner{margin:0 20px 16px;background:rgba(0,0,0,0.25);border-radius:10px;padding:14px 16px;text-align:center}
+  .wc-cierre-texto{color:rgba(255,255,255,0.9);font-size:13px;line-height:1.6;margin-bottom:10px}
+  .wc-cierre-btn{background:rgba(255,255,255,0.2);color:#fff;border:0.5px solid rgba(255,255,255,0.3);border-radius:20px;padding:7px 18px;font-size:12px;cursor:pointer;font-family:inherit}
+
 </style>
 
 
@@ -1103,7 +1151,37 @@ const TIENDA_CONFIG = {
     </div>
   </div>
 
-  
+  <div id="wc-wrap">
+    <div id="wc-card">
+      <div id="wc-stars"></div>
+      <div id="wc-bg">
+        <div class="wc-header">
+          <span class="wc-dia-txt" id="wc-dia"></span>
+          <span class="wc-sep">·</span>
+          <span class="wc-fecha-txt" id="wc-fecha"></span>
+          <span class="wc-sep">·</span>
+          <span class="wc-luna-info" id="wc-luna-info"></span>
+          <span class="wc-sep" id="wc-pill-sep">·</span>
+          <span class="wc-pill-bar" id="wc-pills"></span>
+          <div class="wc-hright">
+            <span class="wc-festivo" id="wc-festivo"></span>
+            <button class="wc-expand-btn" onclick="wcToggle()">Ver más &#9662;</button>
+            <button class="wc-close-btn" onclick="wcCerrarTodo()" title="Cerrar">&#10005;</button>
+          </div>
+        </div>
+        <div class="wc-body" id="wc-body">
+          <div class="wc-inner" id="wc-inner"></div>
+        </div>
+        <div class="wc-cierre" id="wc-cierre">
+          <div class="wc-cierre-inner">
+            <div class="wc-cierre-texto">&#10024; Visita nuestra tienda espiritual<br>y encuentra lo que tu alma necesita hoy</div>
+            <button class="wc-cierre-btn" onclick="wcCerrarFinal()">Ver tienda &#8594;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="search-filter-bar">
     <div class="max-w-[1400px] mx-auto">
       <div class="search-box">
@@ -1647,5 +1725,238 @@ try {
   wa.addEventListener("mouseleave", function() { wa.classList.remove("expandido"); });
 })();
 </script>
+<script>
+(function() {
+  var hoy = new Date();
+  var mes = hoy.getMonth() + 1;
+  var dia = hoy.getDate();
+  var anio = hoy.getFullYear();
+
+  function nthDow(anio, mes, dow, n) {
+    var count = 0;
+    for (var d = 1; d <= 31; d++) {
+      var f = new Date(anio, mes - 1, d);
+      if (f.getMonth() !== mes - 1) break;
+      if (f.getDay() === dow) { count++; if (count === n) return d; }
+    }
+    return -1;
+  }
+
+  var diaMadre   = nthDow(anio, 5, 0, 2);
+  var diaPadre   = nthDow(anio, 6, 0, 3);
+  var blackFri   = nthDow(anio, 11, 5, 4);
+
+  var fechas = [
+    {m:1,  d:1,           bg:"#1565C0", txt:"🎆 ¡Feliz Año Nuevo! Empieza con algo especial"},
+    {m:2,  d:14,          bg:"#c62828", txt:"💕 San Valentín — Sorprende a quien amas"},
+    {m:3,  d:8,           bg:"#6a1b9a", txt:"👩 Día de la Mujer — Celebra con un regalo especial"},
+    {m:4,  d:23,          bg:"#2e7d32", txt:"📚 Día del Idioma — Conecta con tu cultura"},
+    {m:5,  d:1,           bg:"#37474f", txt:"👷 Día del Trabajo — Gracias por tu esfuerzo"},
+    {m:5,  d:diaMadre,    bg:"#e91e63", txt:"🌸 Día de la Madre — Házla sentir especial hoy"},
+    {m:6,  d:diaPadre,    bg:"#1565C0", txt:"👔 Día del Padre — Regálale algo especial"},
+    {m:7,  d:20,          bg:"#c62828", txt:"🇨🇴 Independencia de Colombia — ¡Viva Colombia!"},
+    {m:8,  d:7,           bg:"#c62828", txt:"🇨🇴 Batalla de Boyacá — Orgullo colombiano"},
+    {m:10, d:31,          bg:"#4a148c", txt:"🎃 Halloween — ¡La noche más mágica del año!"},
+    {m:11, d:blackFri,    bg:"#1a1a1a", txt:"🛍 Black Friday — ¡Descuentos especiales hoy!", gold:true},
+    {m:12, d:7,           bg:"#c62828", txt:"🕯 Noche de Velitas — Noche mágica colombiana"},
+    {m:12, d:24,          bg:"#b71c1c", txt:"🎄 Nochebuena — Haz tu regalo esta noche"},
+    {m:12, d:25,          bg:"#b71c1c", txt:"🎄 ¡Feliz Navidad! — Día de amor y regalos"},
+    {m:12, d:31,          bg:"#1565C0", txt:"🎆 Año Viejo — Cierra el año a lo grande"},
+  ];
+
+  var encontrado = null;
+  for (var i = 0; i < fechas.length; i++) {
+    var f = fechas[i];
+    if (f.m === mes && f.d === dia) { encontrado = f; break; }
+  }
+  if (!encontrado) {
+    var man = new Date(anio, mes-1, dia+1);
+    for (var i = 0; i < fechas.length; i++) {
+      var f = fechas[i];
+      if (f.m === man.getMonth()+1 && f.d === man.getDate()) {
+        encontrado = {bg:f.bg, txt:f.txt + " — ¡Mañana!", gold:f.gold};
+        break;
+      }
+    }
+  }
+
+  if (encontrado) {
+    var bar = document.getElementById("gs-fecha-bar");
+    if (bar) {
+      bar.style.display = "block";
+      bar.style.background = encontrado.bg;
+      bar.style.color = encontrado.gold ? "#FFD700" : "#fff";
+      bar.textContent = encontrado.txt;
+    }
+  }
+})();
+</script>
+<script>
+(function() {
+  var hoy = new Date();
+  var mes = hoy.getMonth()+1, dia = hoy.getDate(), anio = hoy.getFullYear();
+  var meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  var diasSem = ['Domingo','Lunes','Martes','Mi\u00e9rcoles','Jueves','Viernes','S\u00e1bado'];
+  function nthDow(y,m,dow,n){var c=0;for(var d=1;d<=31;d++){var f=new Date(y,m-1,d);if(f.getMonth()!==m-1)break;if(f.getDay()===dow){c++;if(c===n)return d;}}return -1;}
+  var diaMadre=nthDow(anio,5,0,2),diaPadre=nthDow(anio,6,0,3),blackFri=nthDow(anio,11,5,4);
+  function faselunar(){
+    var c=(((hoy-new Date(2000,0,6))/(1000*60*60*24))%29.53+29.53)%29.53;
+    var f=[
+      {max:1.85,n:'Luna nueva',e:'\uD83C\uDF11',bg:['#0f0c29','#302b63','#24243e'],energia:'Inicio de ciclo \u2014 intenci\u00f3n y semilla',practica:'Medita, escribe intenciones, silencio interior'},
+      {max:7.38,n:'Luna creciente',e:'\uD83C\uDF12',bg:['#1a1a2e','#16213e','#0f3460'],energia:'Crecimiento \u2014 acci\u00f3n y momentum',practica:'Inicia proyectos, contacta personas, act\u00faa'},
+      {max:9.22,n:'Cuarto creciente',e:'\uD83C\uDF13',bg:['#1b2838','#1e3a5f','#2d6a9f'],energia:'Decisi\u00f3n \u2014 superar obst\u00e1culos',practica:'Toma decisiones, act\u00faa con determinaci\u00f3n'},
+      {max:14.76,n:'Gibosa creciente',e:'\uD83C\uDF14',bg:['#2c3e50','#3d5a80','#537895'],energia:'Refinamiento \u2014 perfeccionar lo iniciado',practica:'Ajusta planes, enf\u00f3cate en detalles'},
+      {max:16.61,n:'Luna llena',e:'\uD83C\uDF15',bg:['#1a237e','#283593','#3949ab'],energia:'Culminaci\u00f3n \u2014 m\u00e1xima energ\u00eda y revelaci\u00f3n',practica:'Celebra logros, ritualiza, suelta lo que ya no sirve'},
+      {max:22.15,n:'Luna menguante',e:'\uD83C\uDF16',bg:['#1b5e20','#2e7d32','#388e3c'],energia:'Gratitud \u2014 liberar y agradecer',practica:'Limpia tu espacio, perdona, paga deudas'},
+      {max:23.99,n:'Cuarto menguante',e:'\uD83C\uDF17',bg:['#4a148c','#6a1b9a','#7b1fa2'],energia:'Reflexi\u00f3n \u2014 evaluar y soltar',practica:'Journaling, cortar lazos, introspecci\u00f3n'},
+      {max:99,n:'Luna bals\u00e1mica',e:'\uD83C\uDF18',bg:['#0f0c29','#1a0533','#2d1b69'],energia:'Descanso \u2014 preparar el nuevo ciclo',practica:'Reposa, no fuerces, prepara intenciones'},
+    ];
+    for(var i=0;i<f.length;i++){if(c<f[i].max)return f[i];}return f[0];
+  }
+  function signoSolar(){
+    var s=[
+      {n:'Capricornio',e:'\u2651',e2:'Disciplina y metas'},{n:'Acuario',e:'\u2652',e2:'Innovaci\u00f3n y comunidad'},
+      {n:'Piscis',e:'\u2653',e2:'Intuici\u00f3n y espiritualidad'},{n:'Aries',e:'\u2648',e2:'Acci\u00f3n y nuevos comienzos'},
+      {n:'Tauro',e:'\u2649',e2:'Estabilidad y placer'},{n:'G\u00e9minis',e:'\u264a',e2:'Comunicaci\u00f3n y curiosidad'},
+      {n:'C\u00e1ncer',e:'\u264b',e2:'Emoci\u00f3n e intuici\u00f3n'},{n:'Leo',e:'\u264c',e2:'Creatividad y liderazgo'},
+      {n:'Virgo',e:'\u264d',e2:'An\u00e1lisis y servicio'},{n:'Libra',e:'\u264e',e2:'Equilibrio y relaciones'},
+      {n:'Escorpio',e:'\u264f',e2:'Transformaci\u00f3n y profundidad'},{n:'Sagitario',e:'\u2650',e2:'Expansi\u00f3n y aventura'}
+    ];
+    var l=[20,19,20,20,21,21,22,23,23,23,22,22];
+    return s[(dia<=l[mes-1])?(mes-2+12)%12:(mes-1)%12];
+  }
+  function tzolkin(){
+    var diff=Math.floor((hoy-new Date(2020,0,1))/(1000*60*60*24));
+    var nombres=['Imix','Ik','Akbal','Kan','Chicchan','Cimi','Manik','Lamat','Muluc','Oc','Chuen','Eb','Ben','Ix','Men','Cib','Caban','Etznab','Cauac','Ahau'];
+    var energias=['Unidad','Desaf\u00edo','Activaci\u00f3n','Definici\u00f3n','Empoderamiento','Ritmo','Resonancia','Integridad','Intenci\u00f3n','Manifestaci\u00f3n','Liberaci\u00f3n','Cooperaci\u00f3n','Trascendencia'];
+    return{tono:((diff%13)+13)%13+1,signo:nombres[((diff%20)+20)%20],energia:energias[((diff%13)+13)%13]};
+  }
+  function tiempoLiturgico(){
+    var pascua=anio===2026?new Date(2026,3,5):new Date(anio,3,9);
+    var cuaresma=new Date(pascua.getTime()-46*864e5);
+    var adviento=new Date(anio,11,25);
+    adviento.setDate(adviento.getDate()-(adviento.getDay()===0?21:adviento.getDay()+21));
+    var hd=new Date(anio,mes-1,dia);
+    if(hd>=adviento)return{tiempo:'Adviento',desc:'Tiempo de espera y preparaci\u00f3n para Navidad'};
+    if(hd>=new Date(anio,11,25))return{tiempo:'Navidad',desc:'Celebraci\u00f3n del nacimiento de Cristo'};
+    if(hd>=cuaresma&&hd<pascua)return{tiempo:'Cuaresma',desc:'40 d\u00edas de ayuno, oraci\u00f3n y conversi\u00f3n'};
+    if(hd>=pascua&&hd<new Date(pascua.getTime()+50*864e5))return{tiempo:'Tiempo Pascual',desc:'50 d\u00edas de alegr\u00eda - Cristo resucitado'};
+    return{tiempo:'Tiempo Ordinario',desc:'Tiempo de crecimiento en la fe cotidiana'};
+  }
+  function santoDelDia(){
+    var s={'1-1':'Mar\u00eda Madre de Dios','1-6':'Reyes Magos','2-2':'Candelaria','2-14':'San Valent\u00edn','3-19':'San Jos\u00e9','3-25':'Anunciaci\u00f3n','6-13':'San Antonio de Padua','6-24':'San Juan Bautista','6-29':'San Pedro y San Pablo','7-16':'Virgen del Carmen','8-15':'Asunci\u00f3n de la Virgen','9-29':'San Miguel Arc\u00e1ngel','10-4':'San Francisco de As\u00eds','10-7':'Virgen del Rosario','11-1':'Todos los Santos','11-2':'Fieles Difuntos','12-8':'Inmaculada Concepci\u00f3n','12-12':'Virgen de Guadalupe','12-25':'Navidad'};
+    return s[mes+'-'+dia]||null;
+  }
+  function calendarioChino(){
+    var animales=['Rata','Buey','Tigre','Conejo','Drag\u00f3n','Serpiente','Caballo','Cabra','Mono','Gallo','Perro','Cerdo'];
+    return{animal:animales[(anio-2020+120)%12]};
+  }
+  function calendarioBudista(){
+    var c=(((hoy-new Date(2000,0,6))/(1000*60*60*24))%29.53+29.53)%29.53;
+    var festiv={'5-19':'Vesak - Nacimiento e Iluminaci\u00f3n del Buda','2-14':'Parinirvana del Buda','10-5':'Kathina - fin del retiro mon\u00e1stico'};
+    return{anio:anio+543,esUposatha:c<1.85||(c>13.76&&c<15.76),fiesta:festiv[mes+'-'+dia]||null};
+  }
+  var luna=faselunar(),signo=signoSolar(),tzol=tzolkin(),liturgico=tiempoLiturgico(),santo=santoDelDia(),chino=calendarioChino(),budista=calendarioBudista();
+  var festivos=[{m:1,d:1},{m:1,d:6},{m:5,d:1},{m:5,d:diaMadre},{m:6,d:29},{m:7,d:20},{m:8,d:7},{m:10,d:12},{m:11,d:1},{m:12,d:8},{m:12,d:25}];
+  var esFestivo=festivos.some(function(f){return f.m===mes&&f.d===dia;});
+  var starsEl=document.getElementById('wc-stars');
+  for(var i=0;i<22;i++){var s=document.createElement('div');s.className='wc-star';var sz=Math.random()*2+1;s.style.cssText='width:'+sz+'px;height:'+sz+'px;top:'+Math.random()*100+'%;left:'+Math.random()*100+'%;animation-delay:'+Math.random()*3+'s;animation-duration:'+(1.5+Math.random()*2.5)+'s;';starsEl.appendChild(s);}
+  var bg=document.getElementById('wc-bg');
+  bg.style.backgroundImage='linear-gradient(135deg,'+luna.bg[0]+','+luna.bg[1]+','+luna.bg[2]+','+luna.bg[0]+','+luna.bg[1]+')';
+  document.getElementById('wc-dia').textContent=diasSem[hoy.getDay()];
+  document.getElementById('wc-fecha').textContent=dia+' de '+meses[mes-1]+' \u00b7 '+anio;
+  document.getElementById('wc-luna-info').textContent=luna.e+' '+luna.n+'  \u00b7  \u2600 Signo solar: '+signo.e+' '+signo.n;
+  var fest=document.getElementById('wc-festivo');
+  fest.textContent=esFestivo?'Festivo en Colombia':'D\u00eda laboral';
+  fest.className='wc-festivo '+(esFestivo?'si':'no');
+  var celebraciones=[
+    {m:1,d:1,e:'[NYE]',t:'A\u00f1o Nuevo',c:'Festivo Colombia'},
+    {m:2,d:14,e:'[VAL]',t:'San Valent\u00edn',c:'Universal'},
+    {m:3,d:8,e:'[MUJ]',t:'D\u00eda de la Mujer',c:'Universal'},
+    {m:3,d:20,e:'[EQX]',t:'Equinoccio Ostara',c:'C\u00f3smico'},
+    {m:5,d:1,e:'[TRB]',t:'D\u00eda del Trabajo',c:'Festivo Colombia'},
+    {m:5,d:diaMadre,e:'[MAD]',t:'D\u00eda de la Madre',c:'Festivo Colombia'},
+    {m:6,d:21,e:'[SOL]',t:'Solsticio Litha',c:'C\u00f3smico'},
+    {m:6,d:diaPadre,e:'[PAD]',t:'D\u00eda del Padre',c:'Colombia'},
+    {m:7,d:20,e:'[COL]',t:'Independencia',c:'Festivo Colombia'},
+    {m:8,d:7,e:'[BOY]',t:'Batalla de Boyac\u00e1',c:'Festivo Colombia'},
+    {m:9,d:22,e:'[AUT]',t:'Equinoccio Mabon',c:'C\u00f3smico'},
+    {m:10,d:31,e:'[HAL]',t:'Halloween Samhain',c:'Universal'},
+    {m:11,d:1,e:'[SAN]',t:'Todos los Santos',c:'Festivo Colombia'},
+    {m:11,d:blackFri,e:'[BLK]',t:'Black Friday',c:'Comercial'},
+    {m:12,d:7,e:'[VEL]',t:'Noche de Velitas',c:'Colombia'},
+    {m:12,d:8,e:'[INM]',t:'Inmaculada Concepci\u00f3n',c:'Festivo Colombia'},
+    {m:12,d:21,e:'[YUL]',t:'Solsticio Yule',c:'C\u00f3smico'},
+    {m:12,d:25,e:'[NAV]',t:'Navidad',c:'Festivo Colombia'},
+    {m:12,d:31,e:'[AVI]',t:'A\u00f1o Viejo',c:'Universal'},
+  ];
+  var hoyTs=new Date(anio,mes-1,dia).getTime();
+  var hoyC=celebraciones.filter(function(c){return c.m===mes&&c.d===dia;});
+  var pillsEl=document.getElementById('wc-pills');
+  if(hoyC.length>0){pillsEl.textContent=hoyC.map(function(c){return c.t;}).join(' · ');}
+  else{pillsEl.textContent='';document.getElementById('wc-pill-sep').style.display='none';}
+  var diaAnio=Math.ceil((hoy-new Date(anio,0,1))/864e5)+1;
+  var html='';
+  html+='<div class="wc-daynums"><div class="wc-daynum">D\u00eda <strong>'+diaAnio+'</strong> de '+(anio%4===0?366:365)+'</div><div class="wc-daynum">Ya pasaron <strong>'+(diaAnio-1)+'</strong> d\u00edas</div></div>';
+  html+='<div class="wc-slabel">Cosmos del d\u00eda</div>';
+  html+='<div class="wc-row"><div class="wc-row-icon">'+luna.e+'</div><div><div class="wc-row-title">Fase lunar: '+luna.n+'</div><div class="wc-row-sub">'+luna.energia+'</div><div class="wc-row-practica">+++ '+luna.practica+'</div></div></div>';
+  html+='<div class="wc-row"><div class="wc-row-icon">\u2600</div><div><div class="wc-row-title">Signo solar: '+signo.e+' '+signo.n+'</div><div class="wc-row-sub">'+signo.e2+'</div></div></div>';
+  html+='<div class="wc-row"><div class="wc-row-icon">*</div><div><div class="wc-row-title">Maya Tzolkin: '+tzol.tono+' '+tzol.signo+'</div><div class="wc-row-sub">Tono '+tzol.tono+' - Energ\u00eda: '+tzol.energia+'</div></div></div>';
+  html+='<hr class="wc-divider"><div class="wc-slabel">Calendario cat\u00f3lico</div>';
+  html+='<div class="wc-cal-block">';
+  html+='<div class="wc-cal-row"><span class="wc-cal-key">Tiempo lit\u00fargico</span><span class="wc-cal-val">'+liturgico.tiempo+'</span></div>';
+  html+='<div class="wc-cal-row"><span class="wc-cal-key">Significado</span><span class="wc-cal-val">'+liturgico.desc+'</span></div>';
+  if(santo)html+='<div class="wc-cal-row"><span class="wc-cal-key">Santo del d\u00eda</span><span class="wc-cal-val">'+santo+'</span></div>';
+  html+='</div>';
+  html+='<div class="wc-slabel">Calendario budista</div>';
+  html+='<div class="wc-cal-block">';
+  html+='<div class="wc-cal-row"><span class="wc-cal-key">A\u00f1o budista</span><span class="wc-cal-val">'+budista.anio+' BE</span></div>';
+  html+='<div class="wc-cal-row"><span class="wc-cal-key">D\u00eda Uposatha</span><span class="wc-cal-val">'+(budista.esUposatha?'S\u00ed - D\u00eda sagrado de meditaci\u00f3n':'No es d\u00eda Uposatha')+'</span></div>';
+  if(budista.fiesta)html+='<div class="wc-cal-row"><span class="wc-cal-key">Festividad</span><span class="wc-cal-val">'+budista.fiesta+'</span></div>';
+  html+='<div class="wc-cal-row"><span class="wc-cal-key">Pr\u00e1ctica</span><span class="wc-cal-val">Meditaci\u00f3n, compasi\u00f3n, generosidad</span></div>';
+  html+='</div>';
+  html+='<div class="wc-slabel">Calendario chino</div>';
+  html+='<div class="wc-cal-block"><div class="wc-cal-row"><span class="wc-cal-key">A\u00f1o</span><span class="wc-cal-val">A\u00f1o del '+chino.animal+'</span></div></div>';
+  html+='<hr class="wc-divider"><div class="wc-slabel">Faltan d\u00edas para...</div>';
+  html+='<div class="wc-counts">';
+  var proximos=celebraciones.map(function(c){var fd=new Date(anio,c.m-1,c.d);var diff=Math.ceil((fd-hoyTs)/864e5);if(diff<=0){fd=new Date(anio+1,c.m-1,c.d);diff=Math.ceil((fd-hoyTs)/864e5);}return Object.assign({},c,{faltan:diff});}).sort(function(a,b){return a.faltan-b.faltan;}).slice(0,3);
+  proximos.forEach(function(p){html+='<div class="wc-count"><span class="wc-count-n">'+p.faltan+'</span><span class="wc-count-l">d\u00edas para<br>'+p.t.split(' ').slice(0,3).join(' ')+'</span></div>';});
+  var dFin=Math.ceil((new Date(anio,11,31)-hoyTs)/864e5);
+  html+='<div class="wc-count"><span class="wc-count-n">'+dFin+'</span><span class="wc-count-l">d\u00edas para<br>Fin de a\u00f1o</span></div>';
+  html+='</div>';
+  document.getElementById('wc-inner').innerHTML=html;
+  // Abrir la tarjeta con animacion
+  setTimeout(function(){
+    document.getElementById('wc-body').style.maxHeight='2000px';
+  }, 100);
+  function wcCerrar(){
+    var body=document.getElementById('wc-body');
+    body.style.maxHeight='0';
+    document.getElementById('wc-chev').classList.add('closed');
+    var cierre=document.getElementById('wc-cierre');
+    cierre.classList.add('show');
+    setTimeout(function(){cierre.classList.remove('show');},4000);
+  }
+  // Auto cierre a los 15 segundos
+  setTimeout(function(){ wcCerrar(); }, 10000);
+  var isOpen=true;
+  window.wcToggle=function(){
+    isOpen=!isOpen;
+    var body=document.getElementById('wc-body');
+    body.style.maxHeight=isOpen?'2000px':'0';
+    document.getElementById('wc-chev').classList.toggle('closed',!isOpen);
+    if(!isOpen){
+      var cierre=document.getElementById('wc-cierre');
+      cierre.classList.add('show');
+      setTimeout(function(){cierre.classList.remove('show');},4000);
+    }
+  };
+  window.wcCerrarFinal=function(){document.getElementById('wc-cierre').classList.remove('show');};
+  window.wcCerrarTodo=function(){
+    document.getElementById('wc-card').style.display='none';
+  };
+})();
+</script>
+
 </body>
 </html>
