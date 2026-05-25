@@ -17,10 +17,10 @@ var GS_TEXTOS = {
   // ============================================================
   ticker: [
     '🔥  Envíos a todo Colombia',
-    '✨ Nuevos productos cada semana',
-    '💬 Pedidos por WhatsApp',
-    '🌿 Ya está aquí! Transforma tu día a día con el producto que todos están buscando',
-    '⭐ 5Calidad garantizada ',
+    '✨  Nuevos productos cada semana',
+    '💬  Pedidos por WhatsApp',
+    '🌿  Ya está aquí! Transforma tu día a día con el producto que todos están buscando',
+    '⭐  Calidad garantizada ',
   ],
 
   // ============================================================
