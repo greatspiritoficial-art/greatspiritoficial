@@ -1245,22 +1245,24 @@ const TIENDA_CONFIG = {
       position: relative !important;
     }
     .modal-close {
-      position: absolute !important;
-      top: 12px !important;
-      left: 12px !important;
+      position: fixed !important;
+      bottom: 24px !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
       z-index: 20 !important;
-      background: rgba(0,0,0,0.45) !important;
+      background: rgba(0,0,0,0.6) !important;
       color: #fff !important;
-      width: 36px !important;
-      height: 36px !important;
+      width: 48px !important;
+      height: 48px !important;
       border-radius: 50% !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
-      font-size: 18px !important;
+      font-size: 20px !important;
       padding: 0 !important;
-      backdrop-filter: blur(4px) !important;
-      border: none !important;
+      backdrop-filter: blur(6px) !important;
+      border: 1.5px solid rgba(255,255,255,0.3) !important;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3) !important;
     }
     .modal-body {
       display: block !important;
@@ -1271,12 +1273,12 @@ const TIENDA_CONFIG = {
     .modal-main-image {
       border-radius: 0 !important;
       margin-bottom: 0 !important;
-      height: 420px !important;
+      height: 75vh !important;
       overflow: hidden !important;
     }
     .modal-main-image img {
       width: 100% !important;
-      height: 420px !important;
+      height: 75vh !important;
       object-fit: cover !important;
     }
     .modal-thumbnails {
@@ -1309,6 +1311,16 @@ const TIENDA_CONFIG = {
     }
   }
 
+
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
+  #header-nombre { font-family: 'Cinzel', serif !important; font-weight: 700 !important; letter-spacing: 1px !important; }
+  .gs-ph-wrap { flex: 1; position: relative; height: 24px; }
+  .gs-ph-wrap input { position: absolute; inset: 0; border: none; background: none; font-size: 14px; color: #333; outline: none; font-family: var(--font-sans); width: 100%; z-index: 2; }
+  .gs-ph-wrap input::placeholder { color: transparent; }
+  .gs-fake-ph { position: absolute; inset: 0; pointer-events: none; display: flex; align-items: center; z-index: 1; font-size: 14px; font-weight: 500; }
+  body.dark-mode .gs-fake-ph { display: none !important; }
+  body.dark-mode .gs-ph-wrap input::placeholder { color: #666; }
+
 </style>
 
 
@@ -1323,6 +1335,7 @@ const TIENDA_CONFIG = {
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Great Spirit Oficial — Tienda Online">
   <meta name="twitter:description" content="Moda Urbana · Belleza · Tecnología · Hogar · Espiritualidad. Encuentra los mejores productos y pide por WhatsApp 📦">
+  <script src="textos.js"></script>
 </head>
 <body>
   <header class="header-temu">
@@ -1343,18 +1356,15 @@ const TIENDA_CONFIG = {
     </div>
   </header>
   <div class="ticker-wrapper">
-    <div class="ticker-track">
-      <span class="ticker-item">🔥 Envíos a todo Colombia</span>
-      <span class="ticker-item">✨ Nuevos productos cada semana</span>
-      <span class="ticker-item">💬 Pedidos por WhatsApp</span>
-      <span class="ticker-item">🌿 Espiritualidad · Moda · Tecnología</span>
-      <span class="ticker-item">⭐ Calidad garantizada</span>
-      <span class="ticker-item">🔥 Envíos a todo Colombia</span>
-      <span class="ticker-item">✨ Nuevos productos cada semana</span>
-      <span class="ticker-item">💬 Pedidos por WhatsApp</span>
-      <span class="ticker-item">🌿 Espiritualidad · Moda · Tecnología</span>
-      <span class="ticker-item">⭐ Calidad garantizada</span>
-    </div>
+    <div class="ticker-track" id="gs-ticker-track"></div>
+    <script>
+    (function(){
+      var track = document.getElementById('gs-ticker-track');
+      var items = (window.GS_TEXTOS && GS_TEXTOS.ticker) || [];
+      var all = items.concat(items); // duplicate for loop
+      all.forEach(function(t){ var s=document.createElement('span'); s.className='ticker-item'; s.innerHTML=t; track.appendChild(s); });
+    })();
+    </script>
   </div>
 
   <div id="wc-wrap">
@@ -1380,7 +1390,7 @@ const TIENDA_CONFIG = {
         </div>
         <div class="wc-cierre" id="wc-cierre">
           <div class="wc-cierre-inner">
-            <div class="wc-cierre-texto">&#10024; Visita nuestra tienda espiritual<br>y encuentra lo que tu alma necesita hoy</div>
+            <div class="wc-cierre-texto"><span id="wc-cierre-msg">&#10024; Visita nuestra tienda espiritual y encuentra lo que tu alma necesita hoy</span></div>
             <button class="wc-cierre-btn" onclick="wcCerrarFinal()">Ver tienda &#8594;</button>
           </div>
         </div>
@@ -1391,11 +1401,16 @@ const TIENDA_CONFIG = {
   <div class="search-filter-bar">
     <div class="max-w-[1400px] mx-auto">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-        <div class="search-box" style="flex:1;">
-          <input type="text" id="searchInput" placeholder="Buscar productos...">
-          <button onclick="searchProducts()">
-            <i class="fas fa-search"></i>
-          </button>
+        <div class="search-box" style="flex:1;display:flex;align-items:center;gap:8px;">
+          <i class="fas fa-search" style="color:#bbb;font-size:14px;flex-shrink:0;"></i>
+          <div class="gs-ph-wrap">
+            <input type="text" id="searchInput" placeholder="Buscar productos..."
+              oninput="gsPhToggle(this.value);aplicarFiltros()"
+              onfocus="gsPhToggle(this.value)"
+              onblur="gsPhToggle(this.value)">
+            <div class="gs-fake-ph" id="gs-fake-ph"></div>
+          </div>
+          <i class="fas fa-microphone" style="color:#bbb;font-size:14px;flex-shrink:0;"></i>
         </div>
         <button id="gs-dark-toggle" onclick="gsDarkToggle()" title="Modo oscuro">&#9790; Oscuro</button>
       </div>
@@ -1694,7 +1709,7 @@ window.openModal = function(sku) {
     + `<div class="modal-info">` +
       `<h2 style="font-size:1.15rem;font-weight:600;margin-bottom:4px;color:#111;">${product.Nombre || ''}</h2>` +
       `<div style="display:flex;align-items:center;gap:8px;margin:6px 0 10px;">` +
-        `<span class="price-current" style="font-size:1.5rem;font-weight:700;color:#E91E63;">$${precio}</span>` +
+        `<span class="price-current" style="font-size:1.8rem;font-weight:700;color:#E91E63;">$${precio}</span>` +
         (precioAntes > 0 ? `<span class="price-old" style="font-size:0.95rem;color:#aaa;text-decoration:line-through;">$${precioAntes.toLocaleString('es-CO')}</span>` : '') +
         `<span style="font-size:11px;color:#888;margin-left:auto;display:flex;align-items:center;gap:4px;"><i class="fas fa-eye" style="font-size:11px;"></i> ${(function(){var d=new Date();var s=d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();return 18+(s%33);})() } hoy</span>` +
       `</div>` +
@@ -1825,7 +1840,8 @@ window.addEventListener('load', function() {
 
 <!-- ===== BANNER INFERIOR ===== -->
 <div id="gs-banner-bottom">
-  <p id="gs-banner-texto">🛍 Envíos a todo Colombia · Paga con Nequi, Daviplata, PSE y más · Escríbenos por WhatsApp</p>
+  <p id="gs-banner-texto"></p>
+  <script>var _bt=document.getElementById("gs-banner-texto");if(_bt&&window.GS_TEXTOS)_bt.textContent=GS_TEXTOS.bannerAzul;</script>
   <button id="gs-banner-close" onclick="gsCerrarBanner()" title="Cerrar">✕</button>
 </div>
 <script>
@@ -1859,13 +1875,7 @@ try {
 <script>
 (function() {
   // ===== TUS TESTIMONIOS — cambia o agrega los que quieras =====
-  var testimonios = [
-    { texto: "Llegó súper rápido, el producto es exactamente como se ve. Muy contenta.", autor: "— Valentina M., Medellín" },
-    { texto: "Excelente atención por WhatsApp, me resolvieron todo. Lo recomiendo.", autor: "— Carlos R., Bogotá" },
-    { texto: "La calidad superó mis expectativas. Ya hice mi segundo pedido.", autor: "— Luisa P., Cali" },
-    { texto: "Muy buen precio y llegó bien empacado. Gracias Great Spirit.", autor: "— Andrés G., Barranquilla" },
-    { texto: "Todo perfecto, rápido y confiable. Volvería a comprar sin dudarlo.", autor: "— María T., Bucaramanga" }
-  ];
+  var testimonios = (window.GS_TEXTOS && GS_TEXTOS.testimonios) || [];
   // =============================================================
 
   try { if (localStorage.getItem('gs_test_visto')) return; } catch(e) {}
@@ -2179,18 +2189,7 @@ try {
 </div>
 <script>
 (function() {
-  var mensajes = [
-    '<strong>María R.</strong> compró hace 5 minutos',
-    '<strong>Carlos B.</strong> visitó la tienda hace poco',
-    '<strong>Luisa P.</strong> compró hace 12 minutos',
-    '3 personas viendo la tienda ahora',
-    'Te respondemos en menos de 5 min',
-    '<strong>Andrés G.</strong> compró hace 2 minutos',
-    'Producto más vendido hoy',
-    'Envíos a todo Colombia',
-    '<strong>Diana M.</strong> acaba de hacer un pedido',
-    '¡Escríbenos, estamos en línea!',
-  ];
+  var mensajes = (window.GS_TEXTOS && GS_TEXTOS.globoWhatsapp) || [];
   var activo = true;
   var globo = document.getElementById('gs-globo');
   var txt = document.getElementById('gs-globo-txt');
@@ -2213,6 +2212,25 @@ window.addEventListener("scroll",function(){var b=document.getElementById("gs-to
 function gsDarkToggle(){var d=document.body.classList.toggle("dark-mode");var btn=document.getElementById("gs-dark-toggle");btn.textContent=d?"☀ Claro":"☽ Oscuro";btn.classList.toggle("active",d);try{localStorage.setItem("gs_dark",d?"1":"0");}catch(e){}}
 try{if(localStorage.getItem("gs_dark")==="1"){document.body.classList.add("dark-mode");var b=document.getElementById("gs-dark-toggle");if(b)b.textContent="&#x2600;";}}catch(e){}
 </script>
+
+<script>
+(function(){
+  var texto = 'Buscar productos';
+  var colores = ['#4285F4','#EA4335','#FBBC05','#34A853'];
+  var ph = document.getElementById('gs-fake-ph');
+  if (!ph) return;
+  ph.innerHTML = texto.split('').map(function(ch, i) {
+    if (ch === ' ') return '<span style="display:inline-block;width:5px;"></span>';
+    return '<span style="color:' + colores[i % colores.length] + ';">' + ch + '</span>';
+  }).join('');
+})();
+
+window.gsPhToggle = function(val) {
+  var ph = document.getElementById('gs-fake-ph');
+  if (ph) ph.style.visibility = val ? 'hidden' : 'visible';
+};
+</script>
+
 </body>
 </html>
 
