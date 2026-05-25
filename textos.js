@@ -31,7 +31,7 @@ var GS_TEXTOS = {
 
   // ============================================================
   // 🟩 GLOBO DE WHATSAPP — burbuja amarilla al lado del botón
-  // Aparece cada 3 segundos. Mensajes aleatorios.
+  // Aparece cada 12 segundos. Mensajes aleatorios.
   // ============================================================
   globoWhatsapp: [
     '<strong>María R.</strong> compró hace 5 minutos',
