@@ -20,6 +20,7 @@ var GS_TEXTOS = {
     '🕒  Respuesta rápida y atención personalizada Envíos a todo Colombia',
     '✨  Nuevos productos cada semana',
     '💬  Pedidos por WhatsApp',
+    '💬  G r e a t  S p i r i t  O f i c i a l - Mundos Pensando en las Personas',
     '🌿  Ya está aquí! Transforma tu día a día con el producto que todos están buscando',
     '⭐  Calidad garantizada ',
   ],
