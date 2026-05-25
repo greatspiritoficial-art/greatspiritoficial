@@ -16,7 +16,7 @@ var GS_TEXTOS = {
   // Agrega o quita líneas. Cada una aparece en rotación.
   // ============================================================
   ticker: [
-    '🔥  1Envíos a todo Colombia',
+    '🔥  ********Envíos a todo Colombia',
     '✨ 2Nuevos productos cada semana',
     '💬 3Pedidos por WhatsApp',
     '🌿 4Espiritualidad · Moda · Tecnología',
