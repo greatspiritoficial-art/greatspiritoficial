@@ -17,6 +17,7 @@ var GS_TEXTOS = {
   // ============================================================
   ticker: [
     '🔥  Envíos a todo Colombia',
+    '🕒  Respuesta rápida y atención personalizada Envíos a todo Colombia',
     '✨  Nuevos productos cada semana',
     '💬  Pedidos por WhatsApp',
     '🌿  Ya está aquí! Transforma tu día a día con el producto que todos están buscando',
