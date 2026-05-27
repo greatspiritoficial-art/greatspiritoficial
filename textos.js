@@ -61,15 +61,10 @@ var GS_TEXTOS = {
 '⌨️ <strong>Sebastián</strong> está enviando un mensaje',
 '💬 <strong>Ana</strong> está hablando con soporte',
 '👀 <strong>Felipe</strong> acaba de entrar a la tienda',
-'⭐ Producto tendencia esta semana',
 '🎉 <strong>Diana M.</strong> acaba de registrarse',
-'⏰ Oferta activa por tiempo limitado',
 '📦 Pedido enviado hoy a Medellín',
 '🔥 Compra reciente desde Bogotá',
 '💬 <strong>Sofía P.</strong> está consultando este producto',
-'🛍 Más de 250 pedidos entregados',
-'✅ Pago contra entrega disponible',
-'🚀 Descuentos especiales hoy'
   ],
 
   // ============================================================
