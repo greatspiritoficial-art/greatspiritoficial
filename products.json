@@ -194,5 +194,33 @@
    "Foto2_Tienda": "",
    "Foto3_Tienda": "",
    "Foto4_Tienda": ""
+ },
+  {
+   "(no usar)": "27/05/2026 3:01",
+   "SKU": "SKU-",
+   "Nombre": "ZAPATOLOCO",
+   "Categoria": "Moda Urbana, Belleza y Salud, Tecnologia Inteligente, Hogar Premium, Espiritualidad y Bienestar, Instalacion y Servicios, Compra y Venta",
+   "SubCategoria": "Ropa Mujer, Fitnes",
+   "Precio": "6666666",
+   "Precio_Antes": "5",
+   "Activo": "SI",
+   "Destacado": "SI",
+   "Descripcion": "DDDDDDDDDDDDFDFDFDSFSDSDSDSDSDF5SFASDA4DSAF\nSDSDFSDF\nASDFA\nSFDFDDDDDDDDDDDDDDDDDDDFDSFASDF",
+   "Marca": "Generico",
+   "Estado": "Nuevo",
+   "Tallas": "NO APLICA",
+   "Peso": "1000g",
+   "Volumen": "NO APLICA",
+   "Colores": "Gris",
+   "Stock": "5",
+   "YouTube": "NO APLICA",
+   "Drive_Foto1": "",
+   "Drive_Foto2": "",
+   "Drive_Foto3": "",
+   "Drive_Foto4": "",
+   "Foto1_Tienda": "",
+   "Foto2_Tienda": "",
+   "Foto3_Tienda": "",
+   "Foto4_Tienda": ""
  }
 ]
