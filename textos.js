@@ -141,7 +141,7 @@ var GS_TEXTOS = {
 '⌨️ <strong>Sebastián</strong> está enviando un mensaje',
 '💬 <strong>Ana</strong> está hablando con soporte',
 '👀 <strong>Felipe</strong> acaba de entrar a la tienda',
-'📦 Pedido enviado hoy a Medellín',
+'📦 Pedido enviado',
 '🔥 Compra reciente desde Bogotá',
 '💬 <strong>Sofía P.</strong> está consultando este producto',
   ],
