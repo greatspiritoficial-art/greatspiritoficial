@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ruleta Tracker Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0b0b0f;
+  --felt: #0d1a12;
+  --panel: #12121a;
+  --border: #1e1e2e;
+  --gold: #c8a84b;
+  --gold2: #f0d070;
+  --red: #c0192a;
+  --red2: #ff3344;
+  --green0: #006633;
+  --green2: #00cc66;
+  --blue: #1a7aad;
+  --blue2: #44aaff;
+  --hot: #e05a00;
+  --hot2: #ff8800;
+  --cold: #1155aa;
+  --cold2: #4488ff;
+  --white: #ece8df;
+  --dim: #3a3a4a;
+  --alert: #8b0000;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;}
+body{background:var(--bg);color:var(--white);font-family:'Rajdhani',sans-serif;font-weight:500;background-image:radial-gradient(ellipse at 50% 0%,#1a1a2e 0%,var(--bg) 70%);}
+
+/* ── APP ── */
+#app{display:flex;flex-direction:column;height:100vh;}
+
+/* ── TOP BAR ── */
+#topbar{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 20px;
+  background:linear-gradient(90deg,#080810,#10101e,#080810);
+  border-bottom:1px solid #2a2a3e;
+  flex-shrink:0;
+  position:relative;
+}
+#topbar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+#topbar h1{
+  font-family:'Playfair Display',serif;font-size:18px;font-weight:900;
+  background:linear-gradient(180deg,var(--gold2),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:5px;flex:1;text-transform:uppercase;
+}
+.tbtn{
+  background:transparent;border:1px solid #2a2a3e;color:#888;
+  padding:5px 15px;cursor:pointer;font-family:'Rajdhani',sans-serif;
+  font-size:11px;font-weight:600;letter-spacing:2px;transition:all .2s;text-transform:uppercase;
+}
+.tbtn:hover,.tbtn.on{background:#1a1a2a;color:var(--gold);border-color:var(--gold);}
+.tbtn.danger{border-color:#3a1010;color:#885544;}
+.tbtn.danger:hover{background:#1a0808;color:var(--red2);border-color:var(--red2);}
+#tc-badge{background:#1a1a28;border:1px solid #2a2a3e;padding:4px 12px;font-size:11px;color:#556;font-family:'Rajdhani',sans-serif;letter-spacing:1px;}
+#tc-badge b{color:var(--gold);font-size:14px;}
+
+/* ── MAIN ── */
+#main{display:flex;flex:1;overflow:hidden;}
+
+/* ══ LEFT COLUMN: DISCO + HOT3 + TABLERO ══ */
+#left{
+  width:520px;flex-shrink:0;display:flex;flex-direction:column;
+  border-right:1px solid #1e1e2e;background:var(--panel);
+}
+
+/* ── DISCO ── */
+#disco-wrap{
+  position:relative;width:100%;flex-shrink:0;
+  padding:0;background:radial-gradient(ellipse at center,#0d100d,#080808);
+  border-bottom:1px solid #1e1e2e;
+}
+#disco-canvas{display:block;width:100%;height:auto;filter:drop-shadow(0 0 18px rgba(0,0,0,.9));}
+
+/* ── HOT3 ── */
+#hot3{
+  display:flex;align-items:stretch;gap:0;
+  background:#0a0a12;border-bottom:1px solid #1e1e2e;flex-shrink:0;
+}
+.h3-label{
+  flex:1;display:flex;flex-direction:column;justify-content:center;padding:6px 10px;
+  font-size:9px;font-weight:700;color:#556;letter-spacing:2px;line-height:1.6;
+  border-right:1px solid #1a1a28;font-family:'Rajdhani',sans-serif;text-transform:uppercase;
+}
+.h3-label span{color:var(--gold);font-size:12px;font-family:'Orbitron',sans-serif;}
+.h3box{
+  width:60px;flex-shrink:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:6px 4px;
+  background:#0e0e1a;border-right:1px solid #1a1a28;
+  font-family:'Orbitron',sans-serif;transition:all .3s;
+}
+.h3box:last-child{border-right:none;}
+.h3box .num{font-size:20px;font-weight:900;color:var(--hot2);line-height:1;}
+.h3box .rank{font-size:8px;color:#444;letter-spacing:1px;margin-top:2px;font-family:'Rajdhani',sans-serif;font-weight:700;}
+.h3box.red .num{color:#ff6666;}
+.h3box.black .num{color:#aaa;}
+.h3box.green .num{color:var(--green2);}
+
+/* ── TABLERO (TAPETE) ── */
+#tab-wrap{
+  flex:1;overflow-y:auto;padding:8px;
+  background:var(--felt);
+}
+#tab-wrap::-webkit-scrollbar{width:4px;}
+#tab-wrap::-webkit-scrollbar-thumb{background:#1a2a1a;border-radius:2px;}
+
+#tapete{
+  display:grid;
+  grid-template-columns:28px repeat(3,1fr) repeat(3,1fr) repeat(3,1fr) repeat(3,1fr);
+  gap:2px;
+}
+.dlbl{
+  text-align:center;background:rgba(180,150,50,.08);
+  border:1px solid rgba(180,150,50,.2);
+  font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;padding:5px 2px;
+  color:rgba(200,168,75,.8);letter-spacing:3px;text-transform:uppercase;
+}
+.z-cell{
+  grid-column:1;grid-row:2/5;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#003d1a,#002211);
+  border:1px solid #005522;
+  color:var(--green2);font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;
+  cursor:pointer;transition:all .2s;
+  text-shadow:0 0 10px rgba(0,200,80,.5);
+}
+.z-cell:hover{background:#004d22;box-shadow:0 0 12px rgba(0,200,80,.3);}
+.n-cell{
+  height:46px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;
+  border:1px solid transparent;cursor:pointer;
+  position:relative;transition:all .18s;user-select:none;
+}
+.n-cell:hover{filter:brightness(1.6);z-index:2;transform:scale(1.05);}
+.cr{background:linear-gradient(135deg,#4a0000,#330000);color:#ffaaaa;border-color:#550000;}
+.cb{background:linear-gradient(135deg,#1a1a1a,#111);color:#ccc;border-color:#252525;}
+.n-cell.hot{
+  box-shadow:0 0 0 2px var(--hot2),0 0 10px rgba(224,90,0,.4);
+  border-color:var(--hot2)!important;
+}
+.n-cell.cold{
+  box-shadow:0 0 0 2px var(--cold2),0 0 10px rgba(68,136,255,.3);
+  border-color:var(--cold2)!important;
+}
+.n-cell.ablink{animation:bla .35s linear infinite;box-shadow:0 0 12px var(--blue2)!important;}
+@keyframes bla{0%,100%{opacity:1;border-color:var(--blue2)}50%{opacity:.15;border-color:transparent}}
+.cbadge{font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:600;color:#555;line-height:1;margin-top:1px;}
+
+/* ══ CENTER ══ */
+#center{flex:1;display:flex;flex-direction:column;overflow:hidden;background:#0c0c14;}
+
+/* ── LOWER (alertas + historial) ── */
+#lower{flex:1;display:flex;overflow:hidden;}
+
+/* ── ALERTAS ── */
+#al-wrap{width:250px;flex-shrink:0;display:flex;flex-direction:column;border-right:1px solid #1e1e2e;}
+#al-hdr{
+  padding:8px 14px;background:#090912;border-bottom:1px solid #1e1e2e;
+  font-family:'Playfair Display',serif;font-size:12px;letter-spacing:3px;
+  background:linear-gradient(90deg,#0a0a16,#0e0e1a);
+  color:var(--gold);
+  display:flex;align-items:center;gap:6px;text-transform:uppercase;
+}
+#al-hdr::before{content:'⚑';color:var(--red2);font-size:13px;}
+#al-list{flex:1;overflow-y:auto;padding:4px;display:flex;flex-direction:column;gap:2px;}
+#al-list::-webkit-scrollbar{width:3px;}
+#al-list::-webkit-scrollbar-thumb{background:#1a1a2a;}
+.aitem{
+  padding:6px 10px;border:1px solid #1a1a28;background:#0c0c18;
+  font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;
+  transition:all .25s;letter-spacing:.5px;font-family:'Rajdhani',sans-serif;
+}
+.aitem.on{
+  background:linear-gradient(90deg,#1a0a00,#140800);
+  border-color:var(--hot2);color:var(--hot2);
+  animation:pal .4s ease-out;
+  box-shadow:inset 0 0 12px rgba(255,136,0,.07);
+}
+@keyframes pal{0%{transform:scale(1.02)}100%{transform:scale(1)}}
+.adot{width:6px;height:6px;border-radius:50%;background:#222;flex-shrink:0;}
+.aitem.on .adot{background:var(--hot2);box-shadow:0 0 5px var(--hot2);}
+.acnt{margin-left:auto;color:#333;font-size:11px;font-weight:700;min-width:20px;text-align:right;font-family:'Orbitron',sans-serif;}
+.aitem.on .acnt{color:var(--hot2);}
+
+/* ── HISTORIAL ── */
+#hist-wrap{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+#hist-hdr{
+  padding:8px 14px;background:#090912;border-bottom:1px solid #1e1e2e;
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:'Playfair Display',serif;font-size:11px;letter-spacing:2px;color:#556;text-transform:uppercase;
+}
+#hist-hdr span{color:var(--gold);}
+#historial{flex:1;overflow-y:auto;padding:4px 6px;display:flex;flex-direction:column;gap:2px;}
+#historial::-webkit-scrollbar{width:3px;}
+#historial::-webkit-scrollbar-thumb{background:#1a1a2a;}
+.hrow{
+  display:flex;align-items:center;gap:8px;padding:2px 4px;
+  border-bottom:1px solid rgba(255,255,255,.04);
+  transition:background .15s;
+}
+.hrow:hover{background:rgba(255,255,255,.03);}
+.hrow.hl-row{background:rgba(200,168,75,.07);border-bottom-color:rgba(200,168,75,.15);}
+.hchip{
+  width:36px;height:36px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;
+  border:2px solid transparent;transition:all .2s;position:relative;
+}
+.hchip.hr{background:radial-gradient(circle,#5a0000,#3a0000);color:#ffaaaa;border-color:#660000;}
+.hchip.hb{background:radial-gradient(circle,#1e1e1e,#111);color:#ddd;border-color:#2a2a2a;}
+.hchip.hg{background:radial-gradient(circle,#004422,#002211);color:var(--green2);border-color:#005522;}
+.hchip.hl{border-color:var(--gold)!important;box-shadow:0 0 8px rgba(200,168,75,.5);}
+.hchip .sector-dot{position:absolute;bottom:0px;right:0px;width:8px;height:8px;border-radius:50%;}
+.hinfo{display:flex;flex-direction:column;gap:1px;flex:1;min-width:0;}
+.hinfo-tags{display:flex;gap:4px;flex-wrap:wrap;align-items:center;}
+.htag{
+  font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;
+  padding:1px 6px;border-radius:2px;letter-spacing:.5px;white-space:nowrap;
+}
+.htag.rep1{background:rgba(255,136,0,.2);color:#ffaa44;border:1px solid rgba(255,136,0,.4);}
+.htag.rep2{background:rgba(255,60,0,.25);color:#ff6644;border:1px solid rgba(255,60,0,.5);}
+.htag.consec{background:rgba(100,200,255,.12);color:#88ccff;border:1px solid rgba(100,200,255,.25);}
+.hnum-idx{font-family:'Rajdhani',sans-serif;font-size:9px;color:#333;font-weight:600;min-width:22px;text-align:right;}
+
+/* ── STAT BAR ── */
+#stat-bar{
+  display:flex;gap:0;padding:0;background:#060610;
+  border-top:1px solid #1a1a28;font-size:10px;flex-shrink:0;overflow-x:auto;
+  font-family:'Rajdhani',sans-serif;font-weight:600;
+}
+.sitem{padding:5px 10px;border-right:1px solid #1a1a28;color:#445;white-space:nowrap;letter-spacing:1px;}
+.sitem b{color:#778;font-family:'Orbitron',sans-serif;font-size:10px;}
+.sitem:last-child{border-right:none;}
+
+/* ══ TOAST ══ */
+#toast{
+  position:fixed;top:50px;left:50%;transform:translateX(-50%);
+  background:#12000a;border:1px solid var(--red2);
+  color:var(--red2);padding:12px 28px;
+  font-family:'Playfair Display',serif;font-size:14px;letter-spacing:3px;
+  z-index:3000;pointer-events:none;opacity:0;
+  transition:opacity .3s;text-align:center;
+  box-shadow:0 0 30px rgba(192,25,42,.3);
+}
+#toast.on{opacity:1;}
+
+/* ══ BIG ALERT ══ */
+#bigalert{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.88);z-index:2500;
+  align-items:center;justify-content:center;
+}
+#bigalert.on{display:flex;}
+#bigalert-box{
+  background:#0e0008;border:2px solid var(--red2);
+  padding:36px 50px;text-align:center;
+  box-shadow:0 0 60px rgba(192,25,42,.4),0 0 120px rgba(192,25,42,.1);
+  animation:alertin .3s ease-out;
+}
+@keyframes alertin{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+#bigalert-box h2{font-family:'Playfair Display',serif;font-size:26px;color:var(--red2);letter-spacing:5px;margin-bottom:10px;text-transform:uppercase;}
+#bigalert-box p{color:#ff9999;font-size:14px;margin-bottom:22px;letter-spacing:1px;font-family:'Rajdhani',sans-serif;font-weight:600;}
+#bigalert-box button{
+  background:#1a0008;border:1px solid var(--red2);color:var(--red2);
+  padding:9px 28px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+}
+
+/* ══ ADMIN ══ */
+#admin{display:none;position:fixed;inset:0;background:rgba(0,0,8,.95);z-index:1800;overflow-y:auto;padding:24px;}
+#admin.on{display:block;}
+#admin-inner{max-width:560px;margin:0 auto;background:#0e0e1a;border:1px solid #2a2a3e;padding:28px;}
+#admin-inner h2{font-family:'Playfair Display',serif;color:var(--gold);font-size:16px;letter-spacing:4px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid #1e1e2e;text-transform:uppercase;}
+.asec{color:var(--gold);font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;margin:14px 0 6px;opacity:.8;text-transform:uppercase;}
+.arow{display:flex;gap:8px;align-items:center;margin-bottom:5px;}
+.arow label{flex:1;font-size:12px;font-weight:600;color:#778;letter-spacing:.5px;font-family:'Rajdhani',sans-serif;}
+.arow input{width:68px;background:#080812;border:1px solid #2a2a3e;color:var(--gold2);font-family:'Orbitron',sans-serif;font-size:13px;padding:5px;outline:none;text-align:center;}
+.arow input:focus{border-color:var(--gold);}
+</style>
+</head>
+<body>
+<div id="app">
+
+<div id="topbar">
+  <h1>◈ RULETA TRACKER PRO</h1>
+  <button class="tbtn on">JUEGO</button>
+  <button class="tbtn danger" onclick="undoLast()">↩ DESHACER</button>
+  <button class="tbtn" onclick="openAdmin()">⚙ ADMIN</button>
+  <button class="tbtn danger" onclick="resetAll()">RESET</button>
+  <div id="tc-badge">TIRADAS <b id="tc">0</b></div>
+</div>
+
+<div id="main">
+
+  <!-- ══ LEFT ══ -->
+  <div id="left">
+    <div id="disco-wrap"><canvas id="disco-canvas"></canvas></div>
+    <div id="hot3">
+      <div class="h3-label">CALIENTES<br>ÚLT. <span id="win-n">12</span></div>
+      <div class="h3box" id="h3b-0"><span class="num" id="h3-0">—</span><span class="rank">1°</span></div>
+      <div class="h3box" id="h3b-1"><span class="num" id="h3-1">—</span><span class="rank">2°</span></div>
+      <div class="h3box" id="h3b-2"><span class="num" id="h3-2">—</span><span class="rank">3°</span></div>
+      <div class="h3box" id="h3b-frente" style="border-left:1px solid #1a1a2e;background:#080e12;border-color:#004455;">
+        <span class="num" id="h3-frente" style="color:#00ddff;font-size:20px;">—</span>
+        <span class="rank" style="color:#006677;">FRENTE</span>
+      </div>
+    </div>
+    <div id="tab-wrap"><div id="tapete"></div></div>
+  </div>
+
+  <!-- ══ CENTER ══ -->
+  <div id="center">
+    <div id="lower">
+      <div id="al-wrap">
+        <div id="al-hdr">ALERTAS</div>
+        <div id="al-list"></div>
+      </div>
+      <div id="hist-wrap">
+        <div id="hist-hdr"><span id="hist-lbl">HISTORIAL</span><span id="hist-cnt">0 tiradas</span></div>
+        <div id="historial"></div>
+        <div id="stat-bar">
+          <div class="sitem">🔴<b id="s-r">0</b></div>
+          <div class="sitem">⬛<b id="s-n">0</b></div>
+          <div class="sitem">PAR:<b id="s-p">0</b></div>
+          <div class="sitem">IMPAR:<b id="s-i">0</b></div>
+          <div class="sitem">D1:<b id="s-d1">0</b></div>
+          <div class="sitem">D2:<b id="s-d2">0</b></div>
+          <div class="sitem">D3:<b id="s-d3">0</b></div>
+          <div class="sitem">M1:<b id="s-m1">0</b></div>
+          <div class="sitem">M2:<b id="s-m2">0</b></div>
+          <div class="sitem">F1:<b id="s-f1">0</b></div>
+          <div class="sitem">F2:<b id="s-f2">0</b></div>
+          <div class="sitem">F3:<b id="s-f3">0</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="toast"></div>
+<div id="bigalert">
+  <div id="bigalert-box">
+    <h2>⚠ ALERTA</h2>
+    <p id="bigalert-msg"></p>
+    <button onclick="closeBig()">CERRAR</button>
+  </div>
+</div>
+
+<div id="admin">
+  <div id="admin-inner">
+    <h2>⚙ PANEL ADMINISTRADOR</h2>
+    <div class="asec">DOCENAS</div>
+    <div class="arow"><label>Sin 1ª Docena (1-12)</label><input id="c-d1" type="number" value="16" min="1"></div>
+    <div class="arow"><label>Sin 2ª Docena (13-24)</label><input id="c-d2" type="number" value="16" min="1"></div>
+    <div class="arow"><label>Sin 3ª Docena (25-36)</label><input id="c-d3" type="number" value="16" min="1"></div>
+    <div class="asec">MITADES</div>
+    <div class="arow"><label>Sin 1ª Mitad (1-18)</label><input id="c-m1" type="number" value="15" min="1"></div>
+    <div class="arow"><label>Sin 2ª Mitad (19-36)</label><input id="c-m2" type="number" value="15" min="1"></div>
+    <div class="asec">FILAS DEL TAPETE</div>
+    <div class="arow"><label>Sin Fila 1 (1,4,7,10…)</label><input id="c-f1" type="number" value="15" min="1"></div>
+    <div class="arow"><label>Sin Fila 2 (2,5,8,11…)</label><input id="c-f2" type="number" value="15" min="1"></div>
+    <div class="arow"><label>Sin Fila 3 (3,6,9,12…)</label><input id="c-f3" type="number" value="15" min="1"></div>
+    <div class="asec">COLORES</div>
+    <div class="arow"><label>Sin Rojos</label><input id="c-rojo" type="number" value="10" min="1"></div>
+    <div class="arow"><label>Sin Negros</label><input id="c-negro" type="number" value="10" min="1"></div>
+    <div class="asec">PARES / IMPARES</div>
+    <div class="arow"><label>Sin Pares</label><input id="c-par" type="number" value="10" min="1"></div>
+    <div class="arow"><label>Sin Impares</label><input id="c-impar" type="number" value="10" min="1"></div>
+    <div class="asec">REPETICIONES</div>
+    <div class="arow"><label>Repite en N jugadas (corta)</label><input id="c-rep1" type="number" value="5" min="2"></div>
+    <div class="arow"><label>Repite en N jugadas (larga)</label><input id="c-rep2" type="number" value="10" min="2"></div>
+    <div class="asec">FRENTE EN DISCO</div>
+    <div class="arow"><label>Sin caer el Frente</label><input id="c-frente" type="number" value="10" min="1"></div>
+    <div class="asec">ZONA FRÍA EN DISCO</div>
+    <div class="arow"><label>Tamaño del arco (nros consecutivos)</label><input id="c-zonaSize" type="number" value="6" min="3" max="12"></div>
+    <div class="arow"><label>Tiradas sin caer ninguno del arco</label><input id="c-zonaMin" type="number" value="15" min="5"></div>
+    <div class="asec">HOT / COLD / DISCO</div>
+    <div class="arow"><label>Cantidad hot/cold en tapete</label><input id="c-hc" type="number" value="6" min="1" max="18"></div>
+    <div class="arow"><label>Ventana hot3 (últimas N tiradas)</label><input id="c-win" type="number" value="12" min="3"></div>
+    <div style="display:flex;gap:8px;margin-top:18px;">
+      <button class="btn g" onclick="saveAdmin()" style="flex:1;padding:9px;font-size:11px;letter-spacing:2px;">GUARDAR</button>
+      <button class="btn" onclick="closeAdmin()" style="flex:1;padding:9px;font-size:11px;letter-spacing:2px;">CERRAR</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════
+//  DATOS RULETA EUROPEA
+// ══════════════════════════════════
+const RED  = new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
+const BLACK= new Set([2,4,6,8,10,11,13,15,17,20,22,24,26,28,29,31,33,35]);
+// Orden físico real de la rueda europea
+const WHEEL = [0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26];
+// Frente (opuesto en rueda, ~18 posiciones)
+const FRENTE={};
+WHEEL.forEach((n,i)=>{ FRENTE[n]=WHEEL[(i+18)%37]; });
+
+const SCOLOR={g:'#00cc88',t:'#00cccc',r:'#ff5566',f:'#9999ff',v:'#cc88ff','5':'#ffcc44'};
+
+// ══════════════════════════════════
+//  ESTADO
+// ══════════════════════════════════
+let history=[], blinkMap={}, audioCtx=null, toastTimer=null, bigQ=[], bigOpen=false;
+let cfg={d1:16,d2:16,d3:16,m1:15,m2:15,f1:15,f2:15,f3:15,rojo:10,negro:10,par:10,impar:10,rep1:5,rep2:10,frente:10,hc:6,win:12,zonaSize:6,zonaMin:15};
+
+// ══════════════════════════════════
+//  ALERTAS (lógica DUPLICADOS)
+// ══════════════════════════════════
+const nh=()=>history.map(h=>h.n);
+const sinceG=(fn)=>{ const h=nh(); for(let i=h.length-1;i>=0;i--) if(fn(h[i])) return h.length-1-i; return h.length; };
+const repG=(w)=>{ const h=nh(); if(h.length<2) return false; return h.slice(-w,-1).includes(h[h.length-1]); };
+const frenteG=()=>{ const h=nh(); if(h.length<2) return 0; const f=FRENTE[h[h.length-1]]; for(let i=h.length-2;i>=0;i--) if(h[i]===f) return h.length-1-i; return h.length; };
+
+// Frente actual: número opuesto al último en la rueda
+const frenteActual=()=>{ const h=nh(); if(!h.length) return null; return FRENTE[h[h.length-1]]; };
+
+// Zona fría: busca el arco de `size` números consecutivos (en WHEEL) que más tiradas lleva sin caer ninguno
+// Devuelve [{startIdx, nums[], sinceMin}] con el peor arco activo
+function zonasFrias(size=6){
+  const h=nh();
+  if(h.length<2) return [];
+  // Para cada número, cuántas tiradas hace que cayó (o history.length si nunca)
+  const lastSeen={};
+  WHEEL.forEach(n=>{ lastSeen[n]=h.length; }); // default = nunca
+  for(let i=h.length-1;i>=0;i--){
+    const n=h[i];
+    if(lastSeen[n]===h.length) lastSeen[n]=h.length-1-i; // tiradas desde que cayó
+  }
+  // Evalúa cada arco de `size` posiciones consecutivas en la rueda
+  const results=[];
+  for(let start=0;start<37;start++){
+    const arcNums=[];
+    for(let j=0;j<size;j++) arcNums.push(WHEEL[(start+j)%37]);
+    // El mínimo (el más "reciente") de ese arco
+    const sinceMin=Math.min(...arcNums.map(n=>lastSeen[n]));
+    results.push({startIdx:start, nums:arcNums, sinceMin});
+  }
+  // Ordena por peor (mayor sinceMin = más tiempo sin caer ninguno)
+  results.sort((a,b)=>b.sinceMin-a.sinceMin);
+  return results;
+}
+
+const ALERTS=[
+  {id:'rojo',  label:'Sin ROJOS',            fn:()=>sinceG(n=>RED.has(n)),             th:()=>cfg.rojo,  grp:'rojo'},
+  {id:'negro', label:'Sin NEGROS',           fn:()=>sinceG(n=>BLACK.has(n)),           th:()=>cfg.negro, grp:'negro'},
+  {id:'d1',    label:'Sin 1ª DOCENA 1-12',   fn:()=>sinceG(n=>n>=1&&n<=12),            th:()=>cfg.d1,    grp:'d1'},
+  {id:'d2',    label:'Sin 2ª DOCENA 13-24',  fn:()=>sinceG(n=>n>=13&&n<=24),           th:()=>cfg.d2,    grp:'d2'},
+  {id:'d3',    label:'Sin 3ª DOCENA 25-36',  fn:()=>sinceG(n=>n>=25&&n<=36),           th:()=>cfg.d3,    grp:'d3'},
+  {id:'m1',    label:'Sin 1ª MITAD 1-18',    fn:()=>sinceG(n=>n>=1&&n<=18),            th:()=>cfg.m1,    grp:'m1'},
+  {id:'m2',    label:'Sin 2ª MITAD 19-36',   fn:()=>sinceG(n=>n>=19&&n<=36),           th:()=>cfg.m2,    grp:'m2'},
+  {id:'par',   label:'Sin PARES',            fn:()=>sinceG(n=>n%2===0&&n!==0),         th:()=>cfg.par,   grp:'par'},
+  {id:'impar', label:'Sin IMPARES',          fn:()=>sinceG(n=>n%2===1),                th:()=>cfg.impar, grp:'impar'},
+  {id:'f1',    label:'Sin FILA 1 (1,4,7…)',  fn:()=>sinceG(n=>n>0&&n%3===1),           th:()=>cfg.f1,    grp:'f1'},
+  {id:'f2',    label:'Sin FILA 2 (2,5,8…)',  fn:()=>sinceG(n=>n>0&&n%3===2),           th:()=>cfg.f2,    grp:'f2'},
+  {id:'f3',    label:'Sin FILA 3 (3,6,9…)',  fn:()=>sinceG(n=>n>0&&n%3===0),           th:()=>cfg.f3,    grp:'f3'},
+  {id:'rep1',  label:()=>`REPITE ${cfg.rep1} jugadas`, fn:()=>repG(cfg.rep1)?1:0,      th:()=>1,         grp:'rep'},
+  {id:'rep2',  label:()=>`REPITE ${cfg.rep2} jugadas`, fn:()=>repG(cfg.rep2)?1:0,      th:()=>1,         grp:'rep'},
+  {id:'frente',label:'Sin FRENTE del último', fn:()=>frenteG(),                         th:()=>cfg.frente,grp:'frente'},
+  {id:'zona',  label:()=>`ZONA FRÍA ${cfg.zonaSize} nros en disco`, fn:()=>{ const z=zonasFrias(cfg.zonaSize); return z.length?z[0].sinceMin:0; }, th:()=>cfg.zonaMin, grp:'zona'},
+];
+
+function alertNums(id){
+  if(id==='rojo')  return [...RED];
+  if(id==='negro') return [...BLACK];
+  if(id==='d1')    return Array.from({length:12},(_,i)=>i+1);
+  if(id==='d2')    return Array.from({length:12},(_,i)=>i+13);
+  if(id==='d3')    return Array.from({length:12},(_,i)=>i+25);
+  if(id==='m1')    return Array.from({length:18},(_,i)=>i+1);
+  if(id==='m2')    return Array.from({length:18},(_,i)=>i+19);
+  if(id==='par')   return [2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36];
+  if(id==='impar') return [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35];
+  if(id==='f1')    return [1,4,7,10,13,16,19,22,25,28,31,34];
+  if(id==='f2')    return [2,5,8,11,14,17,20,23,26,29,32,35];
+  if(id==='f3')    return [3,6,9,12,15,18,21,24,27,30,33,36];
+  if(id==='frente'){ const h=nh(); return h.length?[FRENTE[h[h.length-1]]].filter(Boolean):[]; }
+  if(id==='zona'){ const z=zonasFrias(cfg.zonaSize); return z.length?z[0].nums:[]; }
+  return [];
+}
+
+// ══════════════════════════════════
+//  INIT
+// ══════════════════════════════════
+document.addEventListener('DOMContentLoaded',()=>{
+  buildTapete(); buildAlerts();
+  document.getElementById('win-n').textContent=cfg.win;
+  resizeDisco(); updateAll();
+  window.addEventListener('resize',resizeDisco);
+});
+
+
+// ══════════════════════════════════
+//  TAPETE
+// ══════════════════════════════════
+function buildTapete(){
+  const t=document.getElementById('tapete'); t.innerHTML='';
+  // header fila 1
+  const e=document.createElement('div'); e.style.cssText='grid-column:1;grid-row:1;'; t.appendChild(e);
+  ['1ª DOCENA','2ª DOCENA','3ª DOCENA'].forEach((lbl,i)=>{
+    const d=document.createElement('div');
+    d.className='dlbl'; d.style.cssText=`grid-column:${2+i*4}/${2+i*4+4};grid-row:1;`; d.textContent=lbl; t.appendChild(d);
+  });
+  // zero
+  const z=document.createElement('div');
+  z.className='z-cell'; z.id='cell-0';
+  z.style.cssText='grid-column:1;grid-row:2/5;';
+  z.innerHTML='0<br><span class="cbadge" id="cnt-0"></span>';
+  z.onclick=()=>{ addNumDirect(0); }; t.appendChild(z);
+  // rows: 3,6,9… / 2,5,8… / 1,4,7…
+  [[3,6,9,12,15,18,21,24,27,30,33,36],
+   [2,5,8,11,14,17,20,23,26,29,32,35],
+   [1,4,7,10,13,16,19,22,25,28,31,34]].forEach((row,ri)=>{
+    row.forEach((n,ci)=>{
+      const c=document.createElement('div');
+      c.className='n-cell '+(RED.has(n)?'cr':'cb');
+      c.id=`cell-${n}`; c.style.cssText=`grid-column:${ci+2};grid-row:${ri+2};`;
+      c.innerHTML=`${n}<span class="cbadge" id="cnt-${n}"></span>`;
+      c.onclick=()=>{ addNumDirect(n); }; t.appendChild(c);
+    });
+  });
+}
+
+// ══════════════════════════════════
+//  ALERTAS UI
+// ══════════════════════════════════
+function buildAlerts(){
+  const list=document.getElementById('al-list'); list.innerHTML='';
+  ALERTS.forEach(a=>{
+    const d=document.createElement('div'); d.className='aitem'; d.id=`al-${a.id}`;
+    const lbl=typeof a.label==='function'?a.label():a.label;
+    d.innerHTML=`<div class="adot"></div><span class="atxt">${lbl}</span><span class="acnt" id="ac-${a.id}">0</span>`;
+    list.appendChild(d);
+  });
+}
+
+// ══════════════════════════════════
+//  ACCIONES
+// ══════════════════════════════════
+function addNumDirect(v){
+  history.push({n:v,s:''});
+  updateAll();
+}
+function undoLast(){ if(!history.length) return; history.pop(); updateAll(); }
+function resetAll(){ if(!confirm('¿Borrar todo el historial?')) return; history=[]; Object.keys(blinkMap).forEach(k=>clearBlink(k)); document.querySelectorAll('.aitem').forEach(el=>el.classList.remove('on')); updateAll(); }
+
+// ══════════════════════════════════
+//  UPDATE ALL
+// ══════════════════════════════════
+function updateAll(){
+  const h=nh(), n=h.length;
+  document.getElementById('tc').textContent=n;
+  document.getElementById('hist-cnt').textContent=`${n} tiradas`;
+
+  const cnt={}; for(let i=0;i<=36;i++) cnt[i]=0; h.forEach(x=>cnt[x]++);
+  for(let i=0;i<=36;i++){ const el=document.getElementById(`cnt-${i}`); if(el) el.textContent=cnt[i]||''; }
+
+  const {hot,cold}=getHotCold(cnt,cfg.hc);
+  for(let i=0;i<=36;i++){
+    const c=document.getElementById(`cell-${i}`); if(!c) continue;
+    c.classList.remove('hot','cold');
+    if(hot.includes(i)) c.classList.add('hot');
+    else if(cold.includes(i)) c.classList.add('cold');
+  }
+
+  // stats
+  document.getElementById('s-r').textContent=h.filter(x=>RED.has(x)).length;
+  document.getElementById('s-n').textContent=h.filter(x=>BLACK.has(x)).length;
+  document.getElementById('s-p').textContent=h.filter(x=>x%2===0&&x!==0).length;
+  document.getElementById('s-i').textContent=h.filter(x=>x%2===1).length;
+  document.getElementById('s-d1').textContent=h.filter(x=>x>=1&&x<=12).length;
+  document.getElementById('s-d2').textContent=h.filter(x=>x>=13&&x<=24).length;
+  document.getElementById('s-d3').textContent=h.filter(x=>x>=25&&x<=36).length;
+  document.getElementById('s-m1').textContent=h.filter(x=>x>=1&&x<=18).length;
+  document.getElementById('s-m2').textContent=h.filter(x=>x>=19&&x<=36).length;
+  document.getElementById('s-f1').textContent=h.filter(x=>x>0&&x%3===1).length;
+  document.getElementById('s-f2').textContent=h.filter(x=>x>0&&x%3===2).length;
+  document.getElementById('s-f3').textContent=h.filter(x=>x>0&&x%3===0).length;
+
+  // alertas
+  ALERTS.forEach(a=>{
+    const val=a.fn(), th=a.th();
+    const trig=val>=th;
+    const item=document.getElementById(`al-${a.id}`);
+    const cEl=document.getElementById(`ac-${a.id}`);
+    const was=item.classList.contains('on');
+    item.querySelector('.atxt').textContent=typeof a.label==='function'?a.label():a.label;
+    if(trig){
+      if(!was){ item.classList.add('on'); fireAlert(a); }
+      cEl.textContent=(a.id==='rep1'||a.id==='rep2')?'✓':val;
+    } else {
+      item.classList.remove('on'); cEl.textContent=val; clearBlink(a.id);
+    }
+  });
+
+  // hot3 disco window
+  const h3=getHot3Win();
+  [0,1,2].forEach(i=>{
+    const n2=h3[i]; const el=document.getElementById(`h3-${i}`); const box=document.getElementById(`h3b-${i}`);
+    el.textContent=n2!==undefined?n2:'—';
+    box.className='h3box '+(n2===undefined?'':n2===0?'green':RED.has(n2)?'red':'black');
+  });
+  // frente actual
+  const fa=frenteActual();
+  const fEl=document.getElementById('h3-frente');
+  fEl.textContent=fa!==null?fa:'—';
+  if(fa!==null){
+    fEl.style.color=fa===0?'#00ff88':'#ffffff';
+  } else { fEl.style.color='#00ddff'; }
+
+  updateHistorial();
+  drawDisco();
+}
+
+function fireAlert(a){
+  playAlarm();
+  const lbl=typeof a.label==='function'?a.label():a.label;
+  showToast(`⚠ ${lbl}`);
+  queueBig(lbl);
+  blinkNums(a.id);
+}
+function blinkNums(id){ const ns=alertNums(id); ns.forEach(n=>{ const c=document.getElementById(`cell-${n}`); if(c) c.classList.add('ablink'); }); blinkMap[id]=ns; }
+function clearBlink(id){ if(!blinkMap[id]) return; blinkMap[id].forEach(n=>{ const c=document.getElementById(`cell-${n}`); if(c) c.classList.remove('ablink'); }); delete blinkMap[id]; }
+
+// ══════════════════════════════════
+//  HISTORIAL
+// ══════════════════════════════════
+function updateHistorial(){
+  const el=document.getElementById('historial'); el.innerHTML='';
+  const h=nh();
+  const rev=history.slice().reverse().slice(0,120);
+
+  rev.forEach(({n,s},i)=>{
+    const absIdx=history.length-1-i; // índice real en history
+
+    // ── REPETICIÓN: ¿este número repite dentro de rep1 o rep2 jugadas previas?
+    const prevSlice1=h.slice(Math.max(0,absIdx-cfg.rep1),absIdx);
+    const prevSlice2=h.slice(Math.max(0,absIdx-cfg.rep2),absIdx);
+    const isRep1=absIdx>0 && prevSlice1.includes(n);
+    const isRep2=absIdx>0 && !isRep1 && prevSlice2.includes(n);
+
+    // ── CONSECUTIVO: cuántas veces seguidas cayó este número hasta esta jugada
+    let consec=1;
+    for(let j=absIdx-1;j>=0;j--){
+      if(h[j]===n) consec++;
+      else break;
+    }
+
+    const row=document.createElement('div');
+    row.className='hrow'+(i===0?' hl-row':'');
+
+    // Número índice (posición desde el final)
+    const idxEl=document.createElement('div');
+    idxEl.className='hnum-idx';
+    idxEl.textContent=i+1;
+    row.appendChild(idxEl);
+
+    // Chip circular
+    const chip=document.createElement('div');
+    chip.className='hchip'+(n===0?' hg':RED.has(n)?' hr':' hb')+(i===0?' hl':'');
+    chip.textContent=n;
+    if(s){
+      const dot=document.createElement('div');
+      dot.className='sector-dot'; dot.style.background=SCOLOR[s]||'#888'; chip.appendChild(dot);
+    }
+    row.appendChild(chip);
+
+    // Tags de info
+    const info=document.createElement('div');
+    info.className='hinfo';
+    const tags=document.createElement('div');
+    tags.className='hinfo-tags';
+
+    if(isRep1){
+      const t=document.createElement('span');
+      t.className='htag rep1'; t.textContent=`↩ REP ${cfg.rep1}`; tags.appendChild(t);
+    } else if(isRep2){
+      const t=document.createElement('span');
+      t.className='htag rep2'; t.textContent=`↩ REP ${cfg.rep2}`; tags.appendChild(t);
+    }
+    if(consec>1){
+      const t=document.createElement('span');
+      t.className='htag consec'; t.textContent=`×${consec} CONSEC`; tags.appendChild(t);
+    }
+
+    info.appendChild(tags);
+    row.appendChild(info);
+    el.appendChild(row);
+  });
+}
+
+// ══════════════════════════════════
+//  HOT / COLD / HOT3
+// ══════════════════════════════════
+function getHotCold(cnt,n){
+  const arr=Object.entries(cnt).map(([k,v])=>({num:parseInt(k),cnt:v})).filter(x=>x.num>0);
+  arr.sort((a,b)=>b.cnt-a.cnt);
+  return {hot:arr.slice(0,n).map(x=>x.num), cold:arr.slice(-n).map(x=>x.num)};
+}
+function getHot3Win(){
+  const win=nh().slice(-cfg.win), c={};
+  win.forEach(n=>{ c[n]=(c[n]||0)+1; });
+  return Object.entries(c).map(([k,v])=>({num:parseInt(k),cnt:v})).sort((a,b)=>b.cnt-a.cnt).slice(0,3).map(x=>x.num);
+}
+
+// ══════════════════════════════════
+//  DISCO — REDISEÑO COMPLETO
+// ══════════════════════════════════
+function resizeDisco(){
+  const wrap=document.getElementById('disco-wrap');
+  const s=wrap.clientWidth;
+  const canvas=document.getElementById('disco-canvas');
+  canvas.width=s; canvas.height=s; drawDisco();
+}
+
+function drawDisco(){
+  const canvas=document.getElementById('disco-canvas');
+  const S=canvas.width; if(!S) return;
+  const ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,S,S);
+
+  const margin=38; // margen solo para contadores exteriores
+  const cx=S/2, cy=S/2;
+  const R=S/2-margin;        // outer rim
+  const Ri=R*0.60;      // inner boundary of number band
+  const Rn=R*0.91;      // number label radius — cerca del borde exterior
+  const Rh=R*0.55;      // inner track radius
+  const Rbar=R*0.36;    // max heat bar radius
+  const Rhub=R*0.18;    // hub radius
+
+  const SEG=(2*Math.PI)/37;
+  const cnt={}; for(let i=0;i<=36;i++) cnt[i]=0; nh().forEach(n=>cnt[n]++);
+  const {hot,cold}=getHotCold(cnt,cfg.hc);
+  const h3=getHot3Win();
+  const maxC=Math.max(...Object.values(cnt),1);
+  const lastN=history.length?history[history.length-1].n:null;
+
+  // ── SHADOW ring outer ──
+  ctx.save();
+  const gOuter=ctx.createRadialGradient(cx,cy,R-4,cx,cy,R+2);
+  gOuter.addColorStop(0,'rgba(0,0,0,0)');
+  gOuter.addColorStop(1,'rgba(0,0,0,.8)');
+  ctx.beginPath(); ctx.arc(cx,cy,R+2,0,2*Math.PI); ctx.fillStyle=gOuter; ctx.fill();
+  ctx.restore();
+
+
+  // ── INNER TRACK background ──
+  ctx.save();
+  const trackGrad=ctx.createRadialGradient(cx,cy,Rh,cx,cy,R-3);
+  trackGrad.addColorStop(0,'#0a0a0a'); trackGrad.addColorStop(1,'#050505');
+  ctx.beginPath(); ctx.arc(cx,cy,R-3,0,2*Math.PI); ctx.fillStyle=trackGrad; ctx.fill();
+  ctx.restore();
+
+  // ── EACH SEGMENT ──
+  WHEEL.forEach((num,i)=>{
+    const sa=-Math.PI/2+i*SEG, ea=sa+SEG, ma=sa+SEG/2;
+    const isHot=hot.includes(num), isCold=cold.includes(num);
+    const isH3=h3.includes(num), isLast=num===lastN;
+
+    // Base color fill (outer band: Ri → R-3)
+    ctx.save();
+    let fc;
+    if(num===0)       fc=['#003d1a','#006633'];
+    else if(isH3)     fc=['#4a3800','#6a5000'];
+    else              fc=['#0e0e0e','#1a1a1a'];
+
+    const grad=ctx.createRadialGradient(cx,cy,Ri,cx,cy,R-3);
+    grad.addColorStop(0,fc[0]); grad.addColorStop(1,fc[1]);
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,R-3,sa,ea); ctx.closePath();
+    ctx.fillStyle=grad; ctx.fill();
+    ctx.restore();
+
+    // Clip to band only (between Ri and R-3) for extra effects
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx,cy,R-3,sa,ea); ctx.arc(cx,cy,Ri,ea,sa,true); ctx.closePath();
+    ctx.clip();
+
+    // Hot/cold tint
+    if(isHot){
+      ctx.fillStyle='rgba(255,100,0,.25)'; ctx.fillRect(0,0,S,S);
+    } else if(isCold){
+      ctx.fillStyle='rgba(30,100,255,.2)'; ctx.fillRect(0,0,S,S);
+    }
+    // Last number highlight
+    if(isLast){
+      ctx.fillStyle='rgba(255,220,0,.3)'; ctx.fillRect(0,0,S,S);
+    }
+    ctx.restore();
+
+    // Frequency arc bar (inner zone 0 → Rbar)
+    if(cnt[num]>0){
+      const inten=cnt[num]/maxC;
+      const br=Rbar*(.3+.7*inten);
+      ctx.save();
+      ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,br,sa,ea); ctx.closePath();
+      let bfill;
+      if(num===0)         bfill=`rgba(0,200,80,${.15+.4*inten})`;
+      else if(RED.has(num)) bfill=`rgba(255,80,60,${.12+.4*inten})`;
+      else                  bfill=`rgba(200,200,200,${.08+.28*inten})`;
+      if(isHot) bfill=`rgba(255,140,0,${.15+.45*inten})`;
+      ctx.fillStyle=bfill; ctx.fill(); ctx.restore();
+    }
+
+    // Separator lines
+    ctx.save();
+    ctx.beginPath();
+    const lx1=cx+Math.cos(sa)*Rhub, ly1=cy+Math.sin(sa)*Rhub;
+    const lx2=cx+Math.cos(sa)*(R-3), ly2=cy+Math.sin(sa)*(R-3);
+    ctx.moveTo(lx1,ly1); ctx.lineTo(lx2,ly2);
+    ctx.strokeStyle=isLast?'rgba(255,210,0,.9)':isH3?'rgba(255,150,0,.8)':'rgba(255,255,255,0.55)';
+    ctx.lineWidth=isLast||isH3?1.2:0.9; ctx.stroke(); ctx.restore();
+
+    // ── NUMBER LABEL ──
+    const lx=cx+Math.cos(ma)*Rn, ly=cy+Math.sin(ma)*Rn;
+    const fs=Math.max(12,S*.048);
+    ctx.save(); ctx.translate(lx,ly); ctx.rotate(ma+Math.PI/2);
+    ctx.font=`900 ${fs}px Orbitron,sans-serif`;
+    let fc2;
+    if(isLast)         fc2='#ffee44';
+    else if(isH3)      fc2='#ff9900';
+    else if(isHot)     fc2='#ffbb66';
+    else if(isCold)    fc2='#66aaff';
+    else if(num===0)   fc2='#88ffaa';
+    else               fc2='#ffffff';
+    ctx.shadowColor='rgba(0,0,0,.95)'; ctx.shadowBlur=4;
+    ctx.fillStyle=fc2; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(num,0,0); ctx.restore();
+
+    // H3 orange dot near rim
+    if(isH3){
+      const rank=h3.indexOf(num);
+      const dotR=R-7;
+      const dx=cx+Math.cos(ma)*dotR, dy=cy+Math.sin(ma)*dotR;
+      ctx.save();
+      ctx.beginPath(); ctx.arc(dx,dy,4.5,0,2*Math.PI);
+      ctx.fillStyle=['#ff6600','#ff9900','#ffcc00'][rank]; ctx.fill();
+      ctx.strokeStyle='rgba(0,0,0,.5)'; ctx.lineWidth=1; ctx.stroke();
+      ctx.restore();
+    }
+
+    // Gold halo rim for last number
+    if(isLast){
+      ctx.save();
+      ctx.beginPath(); ctx.arc(cx,cy,R+1,sa,ea); ctx.arc(cx,cy,R-5,ea,sa,true); ctx.closePath();
+      const haloGrad=ctx.createRadialGradient(cx,cy,R-5,cx,cy,R+2);
+      haloGrad.addColorStop(0,'rgba(255,220,0,.2)'); haloGrad.addColorStop(1,'rgba(255,220,0,.7)');
+      ctx.fillStyle=haloGrad; ctx.fill(); ctx.restore();
+    }
+  });
+
+  // ── FRENTE DEL ÚLTIMO NÚMERO ──
+  const frente=frenteActual();
+  if(frente!==null){
+    const fi=WHEEL.indexOf(frente);
+    if(fi>=0){
+      const fsa=-Math.PI/2+fi*SEG, fea=fsa+SEG, fma=fsa+SEG/2;
+      // Arco exterior pulsante color cian
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx,cy,R+4,fsa,fea);
+      ctx.arc(cx,cy,R-2,fea,fsa,true);
+      ctx.closePath();
+      ctx.fillStyle='rgba(0,220,255,0.55)';
+      ctx.fill();
+      // Etiqueta FRENTE sobre el segmento
+      const flx=cx+Math.cos(fma)*(R-8), fly=cy+Math.sin(fma)*(R-8);
+      ctx.save(); ctx.translate(flx,fly); ctx.rotate(fma+Math.PI/2);
+      ctx.font=`bold ${Math.max(6,S*.018)}px Rajdhani,sans-serif`;
+      ctx.fillStyle='#00eeff'; ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.shadowColor='rgba(0,0,0,.9)'; ctx.shadowBlur=3;
+      ctx.fillText('◈',0,0);
+      ctx.restore();
+      ctx.restore();
+    }
+  }
+
+  // ── ZONA FRÍA ──
+  const zonas=zonasFrias(cfg.zonaSize);
+  if(zonas.length && zonas[0].sinceMin>=Math.floor(cfg.zonaMin*0.7)){
+    // Muestra el arco más frío con intensidad según qué tan cerca está del umbral
+    const topZona=zonas[0];
+    const ratio=Math.min(1, topZona.sinceMin/cfg.zonaMin);
+    topZona.nums.forEach(num=>{
+      const wi=WHEEL.indexOf(num);
+      if(wi<0) return;
+      const zsa=-Math.PI/2+wi*SEG, zea=zsa+SEG;
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx,cy,R-3,zsa,zea);
+      ctx.arc(cx,cy,Ri,zea,zsa,true);
+      ctx.closePath();
+      // Azul hielo → violeta según intensidad
+      const alpha=0.15+0.45*ratio;
+      ctx.fillStyle=ratio>=1
+        ? `rgba(160,80,255,${alpha})`   // violeta = alerta activa
+        : `rgba(80,160,255,${alpha})`;  // azul = acercándose
+      ctx.fill();
+      ctx.restore();
+    });
+    // Arco exterior marcando la zona
+    const startI=topZona.startIdx;
+    const arcStart=-Math.PI/2+startI*SEG;
+    const arcEnd=arcStart+cfg.zonaSize*SEG;
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx,cy,R+6,arcStart,arcEnd);
+    ctx.strokeStyle=ratio>=1?'rgba(160,80,255,0.9)':'rgba(80,160,255,0.6)';
+    ctx.lineWidth=3; ctx.stroke();
+    ctx.restore();
+  }
+
+  // ── BORDE BLANCO CÍRCULO PRINCIPAL ──
+  ctx.save();
+  ctx.beginPath(); ctx.arc(cx,cy,R,0,2*Math.PI);
+  ctx.strokeStyle='rgba(255,255,255,0.85)'; ctx.lineWidth=3; ctx.stroke();
+  ctx.restore();
+
+  // ── CONTADORES FUERA DEL CÍRCULO ──
+  const Rout=R+28;
+  const fsOut=Math.max(11,S*.034);
+  WHEEL.forEach((num,i)=>{
+    const ma=-Math.PI/2+i*SEG+SEG/2;
+    const ox=cx+Math.cos(ma)*Rout, oy=cy+Math.sin(ma)*Rout;
+    const c=cnt[num]||0;
+    const isHotN=hot.includes(num), isColdN=cold.includes(num);
+    let outColor;
+    if(num===0)       outColor='#88ffaa';
+    else if(isHotN)   outColor='#ffdd00';
+    else if(isColdN)  outColor='#ff4444';
+    else              outColor='#888888';
+    ctx.save();
+    ctx.translate(ox,oy); ctx.rotate(ma+Math.PI/2);
+    ctx.font=`700 ${fsOut}px Rajdhani,sans-serif`;
+    ctx.fillStyle=outColor;
+    ctx.shadowColor='rgba(0,0,0,.9)'; ctx.shadowBlur=3;
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(c,0,0);
+    ctx.restore();
+  });
+
+  // ── LAST NUMBER CENTER ──
+  if(lastN!==null){
+    const fs2=S*.065;
+    ctx.save();
+    ctx.font=`900 ${fs2}px Orbitron,sans-serif`;
+    ctx.fillStyle=lastN===0?'#00ee77':'#ffffff';
+    ctx.shadowColor='rgba(0,0,0,.95)'; ctx.shadowBlur=6;
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(lastN,cx,cy); ctx.restore();
+  }
+
+}
+
+// ══════════════════════════════════
+//  SONIDO
+// ══════════════════════════════════
+function playAlarm(){
+  try{
+    if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    if(audioCtx.state==='suspended') audioCtx.resume();
+    [0,.14,.28,.42].forEach(t=>{
+      const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+      o.connect(g); g.connect(audioCtx.destination);
+      o.type='square'; o.frequency.value=900;
+      g.gain.setValueAtTime(.28,audioCtx.currentTime+t);
+      g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+t+.12);
+      o.start(audioCtx.currentTime+t); o.stop(audioCtx.currentTime+t+.13);
+    });
+  }catch(e){}
+}
+document.addEventListener('click',()=>{ try{ if(audioCtx&&audioCtx.state==='suspended') audioCtx.resume(); }catch(e){} },{once:true});
+
+// ══════════════════════════════════
+//  TOAST
+// ══════════════════════════════════
+function showToast(msg){
+  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('on');
+  if(toastTimer) clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('on'),4000);
+}
+
+// ══════════════════════════════════
+//  BIG ALERT
+// ══════════════════════════════════
+function queueBig(msg){ bigQ.push(msg); if(!bigOpen) showNextBig(); }
+function showNextBig(){ if(!bigQ.length){ bigOpen=false; return; } bigOpen=true; document.getElementById('bigalert-msg').textContent=bigQ.shift(); document.getElementById('bigalert').classList.add('on'); }
+function closeBig(){ document.getElementById('bigalert').classList.remove('on'); setTimeout(showNextBig,300); }
+
+// ══════════════════════════════════
+//  ADMIN
+// ══════════════════════════════════
+function openAdmin(){ Object.keys(cfg).forEach(k=>{ const el=document.getElementById(`c-${k}`); if(el) el.value=cfg[k]; }); document.getElementById('admin').classList.add('on'); }
+function closeAdmin(){ document.getElementById('admin').classList.remove('on'); }
+function saveAdmin(){
+  Object.keys(cfg).forEach(k=>{ const el=document.getElementById(`c-${k}`); if(el) cfg[k]=parseInt(el.value)||cfg[k]; });
+  document.getElementById('win-n').textContent=cfg.win;
+  buildAlerts(); closeAdmin(); updateAll(); showToast('✓ CONFIGURACIÓN GUARDADA');
+}
+
+
+</script>
+</body>
+</html>
